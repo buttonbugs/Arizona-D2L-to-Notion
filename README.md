@@ -46,7 +46,7 @@ View what to do in your calendar
 
 ### 4. Setup Notion Integration
 
-1. Open [https://www.notion.so/profile/integrations/](https://www.notion.so/profile/integrations/)
+1. Open `https://www.notion.so/profile/integrations/`
 
 2. Click `New Integration`
 
