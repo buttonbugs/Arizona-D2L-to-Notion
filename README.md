@@ -5,28 +5,28 @@ Arizona D2L to Notion is a chrome extension that can sync your Arizona D2L Brigh
 View what to do as list of tasks
 
 <picture>
-  <source
-    srcset="README/00_0_TablePreview_dark.png"
-    media="(prefers-color-scheme: dark)"
-  />
-  <img
-    src="README/00_0_TablePreview.png"
-    alt="alt"
-  />
+    <source
+        srcset="README/00_0_TablePreview_dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
+    <img
+        src="README/00_0_TablePreview.png"
+        alt="alt"
+    />
 </picture>
 
 ### Calendar View
 View what to do in your calendar
 
 <picture>
-  <source
-    srcset="README/00_1_CalendarPreview_dark.png"
-    media="(prefers-color-scheme: dark)"
-  />
-  <img
-    src="README/00_1_CalendarPreview.png"
-    alt="alt"
-  />
+    <source
+        srcset="README/00_1_CalendarPreview_dark.png"
+        media="(prefers-color-scheme: dark)"
+    />
+    <img
+        src="README/00_1_CalendarPreview.png"
+        alt="alt"
+    />
 </picture>
 
 # Download Chrome Extension
@@ -46,7 +46,7 @@ View what to do in your calendar
 
 ### 4. Setup Notion Integration
 
-1. Open `https://www.notion.so/profile/integrations/`
+1. Open Notion Developer Portal (`https://www.notion.so/profile/integrations/`)
 
 2. Click `New Integration`
 
