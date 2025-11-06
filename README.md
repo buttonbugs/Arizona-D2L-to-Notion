@@ -68,7 +68,7 @@ Input the link `chrome://extensions/` in the Chrome search bar and then ENTER (o
 </picture>
 
 ### 3. Add .crx File to Chrome
-Drag the [Arizona_D2L_to_Notion.crx](#Download%20Chrome%20Extension) file you've downloaded into the browser and click `Add extension`
+Drag the [Arizona_D2L_to_Notion.crx](#download-chrome-extension) file you've downloaded into the browser and click `Add extension`
 
 ## Setup D2L Brightspace
 
