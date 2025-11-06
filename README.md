@@ -52,6 +52,24 @@ View what to do in your calendar
 
 ## Setup Chrome Extension
 
+### 1. Open Chrome Extension Settings
+Input the link `chrome://extensions/` in the Chrome search bar and then ENTER (or go to `Chrome` &rarr; `Settings` &rarr; `Extensions`)
+
+### 2. Turn On Developer Mode
+<picture>
+  <source
+    srcset="README/02_2_open_extension_tab_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_2_open_extension_tab.png"
+    alt="alt"
+  />
+</picture>
+
+### 3. Add .crx File to Chrome
+Drag the [Arizona_D2L_to_Notion.crx](#Download%20Chrome%20Extension) file you've downloaded into the browser and click `Add extension`
+
 ## Setup D2L Brightspace
 
 1. A
