@@ -38,12 +38,16 @@ View what to do in your calendar
 
 ## Setup Notion Database
 
-### 1. Download Notion App
-Go to [https://www.notion.com/download](https://www.notion.com/download)
+### 1. Download Notion Desktop App
+Go to `https://www.notion.com/download` to download Notion Desktop App
 
-### 2. Create Notion Account
+### 2. Add Notion Account
+Open Notion Desktop App and follow the instructions to sign up or log in
 
 ### 3. Duplicate Database Template
+1. Go to `https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112`
+2. Click <img src="README/01_3_duplicate.svg" width="16"> in the upper right
+3. Follow the instructions to duplicate the template to your desired location
 
 ### 4. Setup Notion Integration
 
