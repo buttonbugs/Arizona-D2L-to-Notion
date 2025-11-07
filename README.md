@@ -39,6 +39,7 @@ View what to do in your calendar
 ## Setup Notion Database
 
 ### 1. Download Notion App
+Go to [https://www.notion.com/download](https://www.notion.com/download)
 
 ### 2. Create Notion Account
 
