@@ -74,9 +74,33 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 ### 4. Setup Notion Integration
 
-1. Open Notion Developer Portal (`https://www.notion.so/profile/integrations/`)
+1. Open the database you've duplicated in Notion Desktop App
 
-2. Click `New Integration`
+2. Go to `...` &rarr; `Connections` &rarr; `Develop integrations` or go to `https://www.notion.so/profile/integrations/`
+
+<picture>
+  <source
+    srcset="README/01_4_go_to_integration_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/01_4_go_to_integration.png"
+    alt="alt"
+  />
+</picture>
+
+3. Click `New Integration`
+
+<picture>
+  <source
+    srcset="README/01_4_new_integration_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/01_4_new_integration.png"
+    alt="alt"
+  />
+</picture>
 
 ## Setup Chrome Extension
 
