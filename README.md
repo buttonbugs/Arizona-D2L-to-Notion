@@ -123,6 +123,21 @@ Open Notion Desktop App and follow the instructions to sign up or log in
   />
 </picture>
 
+5. Click `Configure integration settings`
+
+6. Make sure `Read content` and `Update content` are on
+
+<picture>
+  <source
+    srcset="README/01_4_integration_internal_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/01_4_integration_internal.png"
+    alt="alt"
+  />
+</picture>
+
 ## Setup Chrome Extension
 
 ### 1. Open Chrome Extension Settings
