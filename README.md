@@ -46,7 +46,19 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 ### 3. Duplicate Database Template
 1. Go to `https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112`
-2. Click <a href="#3-duplicate-database-template"><img src="README/01_3_duplicate.svg" width="16"></a> in the upper right
+2. Click <a href="#3-duplicate-database-template"><img src="README/01_3_duplicate.svg" width="16"></a> in the upper right corner
+
+<picture>
+  <source
+    srcset="README/01_3_duplicate_screen_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/01_3_duplicate_screen.png"
+    alt="alt"
+  />
+</picture>
+
 3. Follow the instructions to duplicate the template to your desired location
 
 ### 4. Setup Notion Integration
