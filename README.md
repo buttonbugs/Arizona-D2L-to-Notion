@@ -61,6 +61,17 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 3. Follow the instructions to duplicate the template to your desired location
 
+<picture>
+  <source
+    srcset="README/01_3_duplicate_private_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/01_3_duplicate_private.png"
+    alt="alt"
+  />
+</picture>
+
 ### 4. Setup Notion Integration
 
 1. Open Notion Developer Portal (`https://www.notion.so/profile/integrations/`)
