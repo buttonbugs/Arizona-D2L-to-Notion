@@ -102,6 +102,27 @@ Open Notion Desktop App and follow the instructions to sign up or log in
   />
 </picture>
 
+4. Fill the form and click `Save`
+
+    **1. Integration Name:** whatever you want ($${\color{red}Integration\ Name\ cannot\ contain\ the\ word\ “notion”}$$)
+
+    **2. Associated workspace:** choose the one [you've created](#2-add-notion-account)
+
+    **3. Type:** choose `Internal`
+
+    **4. Logo (optional):** whatever you want
+
+<picture>
+  <source
+    srcset="README/01_4_new_integration_form_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/01_4_new_integration_form.png"
+    alt="alt"
+  />
+</picture>
+
 ## Setup Chrome Extension
 
 ### 1. Open Chrome Extension Settings
