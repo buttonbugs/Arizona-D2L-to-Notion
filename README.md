@@ -138,6 +138,21 @@ Open Notion Desktop App and follow the instructions to sign up or log in
   />
 </picture>
 
+7. Go back to the database you've duplicated in Notion Desktop App
+
+8. Go to `...` &rarr; `Connections` &rarr; [The integration created [just now](#4-setup-notion-integration)] &rarr; `Confirm`
+
+<picture>
+  <source
+    srcset="README/01_4_integration_connection_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/01_4_integration_connection.png"
+    alt="alt"
+  />
+</picture>
+
 ## Setup Chrome Extension
 
 ### 1. Open Chrome Extension Settings
