@@ -2,7 +2,7 @@
 Arizona D2L to Notion is a chrome extension that can sync your Arizona D2L Brightspace course data (assignments, quizzes, exams, and submission status) into a Notion database.
 ## Preview
 ### Table View
-View what to do as list of tasks
+View what to do as a list of tasks
 
 <picture>
     <source
