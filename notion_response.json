@@ -1,0 +1,647 @@
+{
+    "object": "list",
+    "results": [
+        {
+            "object": "page",
+            "id": "266c1a64-f0d8-8122-aa91-f140f7e19b45",
+            "created_time": "2025-09-06T02:31:00.000Z",
+            "last_edited_time": "2025-09-06T21:55:00.000Z",
+            "created_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "last_edited_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "cover": null,
+            "icon": null,
+            "parent": {
+                "type": "data_source_id",
+                "data_source_id": "266c1a64-f0d8-81c8-aa1a-000b7d451085",
+                "database_id": "266c1a64-f0d8-803b-bbe3-e1e5e78a9363"
+            },
+            "archived": false,
+            "in_trash": false,
+            "properties": {
+                "link": {
+                    "id": "%3BrgR",
+                    "type": "url",
+                    "url": null
+                },
+                "Status": {
+                    "id": "BL%3Cb",
+                    "type": "status",
+                    "status": {
+                        "id": "1e21a9b7-21dc-443c-a230-a2b3f3f5683a",
+                        "name": "Not started",
+                        "color": "default"
+                    }
+                },
+                "Course": {
+                    "id": "IEAZ",
+                    "type": "select",
+                    "select": {
+                        "id": "6db9d807-3a29-440a-abce-95748ad04707",
+                        "name": "AED 150A1",
+                        "color": "orange"
+                    }
+                },
+                "Due Date": {
+                    "id": "riS%3E",
+                    "type": "date",
+                    "date": {
+                        "start": "2025-09-14",
+                        "end": null,
+                        "time_zone": null
+                    }
+                },
+                "Type": {
+                    "id": "y%3Ckd",
+                    "type": "select",
+                    "select": {
+                        "id": "4608380d-5bdc-466d-860c-8d6304c33392",
+                        "name": "Weekly",
+                        "color": "green"
+                    }
+                },
+                "Task": {
+                    "id": "title",
+                    "type": "title",
+                    "title": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": "Reflection 3",
+                                "link": null
+                            },
+                            "annotations": {
+                                "bold": false,
+                                "italic": false,
+                                "strikethrough": false,
+                                "underline": false,
+                                "code": false,
+                                "color": "default"
+                            },
+                            "plain_text": "Reflection 3",
+                            "href": null
+                        }
+                    ]
+                }
+            },
+            "url": "https://www.notion.so/Reflection-3-266c1a64f0d88122aa91f140f7e19b45",
+            "public_url": null
+        },
+        {
+            "object": "page",
+            "id": "266c1a64-f0d8-8173-bb57-fe0c11b768c4",
+            "created_time": "2025-09-06T02:31:00.000Z",
+            "last_edited_time": "2025-09-06T21:55:00.000Z",
+            "created_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "last_edited_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "cover": null,
+            "icon": null,
+            "parent": {
+                "type": "data_source_id",
+                "data_source_id": "266c1a64-f0d8-81c8-aa1a-000b7d451085",
+                "database_id": "266c1a64-f0d8-803b-bbe3-e1e5e78a9363"
+            },
+            "archived": false,
+            "in_trash": false,
+            "properties": {
+                "link": {
+                    "id": "%3BrgR",
+                    "type": "url",
+                    "url": null
+                },
+                "Status": {
+                    "id": "BL%3Cb",
+                    "type": "status",
+                    "status": {
+                        "id": "1e21a9b7-21dc-443c-a230-a2b3f3f5683a",
+                        "name": "Not started",
+                        "color": "default"
+                    }
+                },
+                "Course": {
+                    "id": "IEAZ",
+                    "type": "select",
+                    "select": {
+                        "id": "7e414d9a-ccfb-44b9-95f2-57c783592b33",
+                        "name": "ENGL 106",
+                        "color": "red"
+                    }
+                },
+                "Due Date": {
+                    "id": "riS%3E",
+                    "type": "date",
+                    "date": {
+                        "start": "2025-09-09",
+                        "end": null,
+                        "time_zone": null
+                    }
+                },
+                "Type": {
+                    "id": "y%3Ckd",
+                    "type": "select",
+                    "select": {
+                        "id": "4608380d-5bdc-466d-860c-8d6304c33392",
+                        "name": "Weekly",
+                        "color": "green"
+                    }
+                },
+                "Task": {
+                    "id": "title",
+                    "type": "title",
+                    "title": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": "Complete: Morgan Worksheet",
+                                "link": null
+                            },
+                            "annotations": {
+                                "bold": false,
+                                "italic": false,
+                                "strikethrough": false,
+                                "underline": false,
+                                "code": false,
+                                "color": "default"
+                            },
+                            "plain_text": "Complete: Morgan Worksheet",
+                            "href": null
+                        }
+                    ]
+                }
+            },
+            "url": "https://www.notion.so/Complete-Morgan-Worksheet-266c1a64f0d88173bb57fe0c11b768c4",
+            "public_url": null
+        },
+        {
+            "object": "page",
+            "id": "266c1a64-f0d8-817c-97b3-fe188181f58f",
+            "created_time": "2025-09-06T02:31:00.000Z",
+            "last_edited_time": "2025-09-06T22:21:00.000Z",
+            "created_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "last_edited_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "cover": null,
+            "icon": null,
+            "parent": {
+                "type": "data_source_id",
+                "data_source_id": "266c1a64-f0d8-81c8-aa1a-000b7d451085",
+                "database_id": "266c1a64-f0d8-803b-bbe3-e1e5e78a9363"
+            },
+            "archived": false,
+            "in_trash": false,
+            "properties": {
+                "link": {
+                    "id": "%3BrgR",
+                    "type": "url",
+                    "url": "google.com"
+                },
+                "Status": {
+                    "id": "BL%3Cb",
+                    "type": "status",
+                    "status": {
+                        "id": "1e21a9b7-21dc-443c-a230-a2b3f3f5683a",
+                        "name": "Not started",
+                        "color": "default"
+                    }
+                },
+                "Course": {
+                    "id": "IEAZ",
+                    "type": "select",
+                    "select": {
+                        "id": "7d07d5cc-aca7-476f-b15c-12494cb92930",
+                        "name": "MUS 109",
+                        "color": "yellow"
+                    }
+                },
+                "Due Date": {
+                    "id": "riS%3E",
+                    "type": "date",
+                    "date": {
+                        "start": "2025-09-05",
+                        "end": null,
+                        "time_zone": null
+                    }
+                },
+                "Type": {
+                    "id": "y%3Ckd",
+                    "type": "select",
+                    "select": {
+                        "id": "4608380d-5bdc-466d-860c-8d6304c33392",
+                        "name": "Weekly",
+                        "color": "green"
+                    }
+                },
+                "Task": {
+                    "id": "title",
+                    "type": "title",
+                    "title": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": "Morning Pages and Artist Dates",
+                                "link": null
+                            },
+                            "annotations": {
+                                "bold": false,
+                                "italic": false,
+                                "strikethrough": false,
+                                "underline": false,
+                                "code": false,
+                                "color": "default"
+                            },
+                            "plain_text": "Morning Pages and Artist Dates",
+                            "href": null
+                        }
+                    ]
+                }
+            },
+            "url": "https://www.notion.so/Morning-Pages-and-Artist-Dates-266c1a64f0d8817c97b3fe188181f58f",
+            "public_url": null
+        },
+        {
+            "object": "page",
+            "id": "266c1a64-f0d8-819a-9d0f-ee19d6966727",
+            "created_time": "2025-09-06T02:31:00.000Z",
+            "last_edited_time": "2025-09-06T21:54:00.000Z",
+            "created_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "last_edited_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "cover": null,
+            "icon": null,
+            "parent": {
+                "type": "data_source_id",
+                "data_source_id": "266c1a64-f0d8-81c8-aa1a-000b7d451085",
+                "database_id": "266c1a64-f0d8-803b-bbe3-e1e5e78a9363"
+            },
+            "archived": false,
+            "in_trash": false,
+            "properties": {
+                "link": {
+                    "id": "%3BrgR",
+                    "type": "url",
+                    "url": " "
+                },
+                "Status": {
+                    "id": "BL%3Cb",
+                    "type": "status",
+                    "status": {
+                        "id": "1e21a9b7-21dc-443c-a230-a2b3f3f5683a",
+                        "name": "Not started",
+                        "color": "default"
+                    }
+                },
+                "Course": {
+                    "id": "IEAZ",
+                    "type": "select",
+                    "select": {
+                        "id": "7e414d9a-ccfb-44b9-95f2-57c783592b33",
+                        "name": "ENGL 106",
+                        "color": "red"
+                    }
+                },
+                "Due Date": {
+                    "id": "riS%3E",
+                    "type": "date",
+                    "date": {
+                        "start": "2025-09-09",
+                        "end": null,
+                        "time_zone": null
+                    }
+                },
+                "Type": {
+                    "id": "y%3Ckd",
+                    "type": "select",
+                    "select": {
+                        "id": "4608380d-5bdc-466d-860c-8d6304c33392",
+                        "name": "Weekly",
+                        "color": "green"
+                    }
+                },
+                "Task": {
+                    "id": "title",
+                    "type": "title",
+                    "title": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": "Txtng is killing language reading guide",
+                                "link": null
+                            },
+                            "annotations": {
+                                "bold": false,
+                                "italic": false,
+                                "strikethrough": false,
+                                "underline": false,
+                                "code": false,
+                                "color": "default"
+                            },
+                            "plain_text": "Txtng is killing language reading guide",
+                            "href": null
+                        }
+                    ]
+                }
+            },
+            "url": "https://www.notion.so/Txtng-is-killing-language-reading-guide-266c1a64f0d8819a9d0fee19d6966727",
+            "public_url": null
+        },
+        {
+            "object": "page",
+            "id": "266c1a64-f0d8-81c9-aea7-cf1083c9cb4f",
+            "created_time": "2025-09-06T02:31:00.000Z",
+            "last_edited_time": "2025-09-06T21:55:00.000Z",
+            "created_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "last_edited_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "cover": null,
+            "icon": null,
+            "parent": {
+                "type": "data_source_id",
+                "data_source_id": "266c1a64-f0d8-81c8-aa1a-000b7d451085",
+                "database_id": "266c1a64-f0d8-803b-bbe3-e1e5e78a9363"
+            },
+            "archived": false,
+            "in_trash": false,
+            "properties": {
+                "link": {
+                    "id": "%3BrgR",
+                    "type": "url",
+                    "url": null
+                },
+                "Status": {
+                    "id": "BL%3Cb",
+                    "type": "status",
+                    "status": {
+                        "id": "1e21a9b7-21dc-443c-a230-a2b3f3f5683a",
+                        "name": "Not started",
+                        "color": "default"
+                    }
+                },
+                "Course": {
+                    "id": "IEAZ",
+                    "type": "select",
+                    "select": {
+                        "id": "6db9d807-3a29-440a-abce-95748ad04707",
+                        "name": "AED 150A1",
+                        "color": "orange"
+                    }
+                },
+                "Due Date": {
+                    "id": "riS%3E",
+                    "type": "date",
+                    "date": {
+                        "start": "2025-09-14",
+                        "end": null,
+                        "time_zone": null
+                    }
+                },
+                "Type": {
+                    "id": "y%3Ckd",
+                    "type": "select",
+                    "select": {
+                        "id": "096d7469-31b3-4506-81ef-a335710b1dcd",
+                        "name": "Assignment",
+                        "color": "default"
+                    }
+                },
+                "Task": {
+                    "id": "title",
+                    "type": "title",
+                    "title": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": "Application Activity",
+                                "link": null
+                            },
+                            "annotations": {
+                                "bold": false,
+                                "italic": false,
+                                "strikethrough": false,
+                                "underline": false,
+                                "code": false,
+                                "color": "default"
+                            },
+                            "plain_text": "Application Activity",
+                            "href": null
+                        }
+                    ]
+                }
+            },
+            "url": "https://www.notion.so/Application-Activity-266c1a64f0d881c9aea7cf1083c9cb4f",
+            "public_url": null
+        },
+        {
+            "object": "page",
+            "id": "266c1a64-f0d8-81e4-8ae6-e30952a18be5",
+            "created_time": "2025-09-06T02:31:00.000Z",
+            "last_edited_time": "2025-09-06T21:55:00.000Z",
+            "created_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "last_edited_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "cover": null,
+            "icon": null,
+            "parent": {
+                "type": "data_source_id",
+                "data_source_id": "266c1a64-f0d8-81c8-aa1a-000b7d451085",
+                "database_id": "266c1a64-f0d8-803b-bbe3-e1e5e78a9363"
+            },
+            "archived": false,
+            "in_trash": false,
+            "properties": {
+                "link": {
+                    "id": "%3BrgR",
+                    "type": "url",
+                    "url": null
+                },
+                "Status": {
+                    "id": "BL%3Cb",
+                    "type": "status",
+                    "status": {
+                        "id": "1e21a9b7-21dc-443c-a230-a2b3f3f5683a",
+                        "name": "Not started",
+                        "color": "default"
+                    }
+                },
+                "Course": {
+                    "id": "IEAZ",
+                    "type": "select",
+                    "select": {
+                        "id": "6db9d807-3a29-440a-abce-95748ad04707",
+                        "name": "AED 150A1",
+                        "color": "orange"
+                    }
+                },
+                "Due Date": {
+                    "id": "riS%3E",
+                    "type": "date",
+                    "date": {
+                        "start": "2025-09-07",
+                        "end": null,
+                        "time_zone": null
+                    }
+                },
+                "Type": {
+                    "id": "y%3Ckd",
+                    "type": "select",
+                    "select": {
+                        "id": "4608380d-5bdc-466d-860c-8d6304c33392",
+                        "name": "Weekly",
+                        "color": "green"
+                    }
+                },
+                "Task": {
+                    "id": "title",
+                    "type": "title",
+                    "title": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": "Reflection 2",
+                                "link": null
+                            },
+                            "annotations": {
+                                "bold": false,
+                                "italic": false,
+                                "strikethrough": false,
+                                "underline": false,
+                                "code": false,
+                                "color": "default"
+                            },
+                            "plain_text": "Reflection 2",
+                            "href": null
+                        }
+                    ]
+                }
+            },
+            "url": "https://www.notion.so/Reflection-2-266c1a64f0d881e48ae6e30952a18be5",
+            "public_url": null
+        },
+        {
+            "object": "page",
+            "id": "266c1a64-f0d8-815c-a305-cbd717a7ac4e",
+            "created_time": "2025-09-06T02:31:00.000Z",
+            "last_edited_time": "2025-09-06T21:55:00.000Z",
+            "created_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "last_edited_by": {
+                "object": "user",
+                "id": "fe67651d-e1f8-45a6-afed-22a895d04677"
+            },
+            "cover": null,
+            "icon": null,
+            "parent": {
+                "type": "data_source_id",
+                "data_source_id": "266c1a64-f0d8-81c8-aa1a-000b7d451085",
+                "database_id": "266c1a64-f0d8-803b-bbe3-e1e5e78a9363"
+            },
+            "archived": false,
+            "in_trash": false,
+            "properties": {
+                "link": {
+                    "id": "%3BrgR",
+                    "type": "url",
+                    "url": null
+                },
+                "Status": {
+                    "id": "BL%3Cb",
+                    "type": "status",
+                    "status": {
+                        "id": "1e21a9b7-21dc-443c-a230-a2b3f3f5683a",
+                        "name": "Not started",
+                        "color": "default"
+                    }
+                },
+                "Course": {
+                    "id": "IEAZ",
+                    "type": "select",
+                    "select": {
+                        "id": "40ff95ce-8dc4-4a11-8737-b9039f1bd5a5",
+                        "name": "PHYS 120",
+                        "color": "blue"
+                    }
+                },
+                "Due Date": {
+                    "id": "riS%3E",
+                    "type": "date",
+                    "date": {
+                        "start": "2025-09-10",
+                        "end": null,
+                        "time_zone": null
+                    }
+                },
+                "Type": {
+                    "id": "y%3Ckd",
+                    "type": "select",
+                    "select": {
+                        "id": "4608380d-5bdc-466d-860c-8d6304c33392",
+                        "name": "Weekly",
+                        "color": "green"
+                    }
+                },
+                "Task": {
+                    "id": "title",
+                    "type": "title",
+                    "title": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": "HW 2 - biophysics",
+                                "link": null
+                            },
+                            "annotations": {
+                                "bold": false,
+                                "italic": false,
+                                "strikethrough": false,
+                                "underline": false,
+                                "code": false,
+                                "color": "default"
+                            },
+                            "plain_text": "HW 2 - biophysics",
+                            "href": null
+                        }
+                    ]
+                }
+            },
+            "url": "https://www.notion.so/HW-2-biophysics-266c1a64f0d8815ca305cbd717a7ac4e",
+            "public_url": null
+        }
+    ],
+    "next_cursor": null,
+    "has_more": false,
+    "type": "page_or_data_source",
+    "page_or_data_source": {},
+    "request_id": "f77fb318-19c9-48b3-8f91-525867907d3f"
+}

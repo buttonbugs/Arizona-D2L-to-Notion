@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "Arizona D2L to Notion",
+    "version": "1.0.0",
+    "description": "An extension that can sync your D2L course data into a Notion database.",
+    "background": {
+        "service_worker": "./background.js"
+    },
+    "icons": {
+        "128": "arizona.png"
+    },
+    "action":{
+        "default_popup":"popup.html",
+        "default_title": "Arizona D2L to Notion"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://d2l.arizona.edu/*"],
+            "js": ["./content_script.js"]
+        }
+    ],
+    "host_permissions": ["https://d2l.arizona.edu/*","https://api.notion.com/*"],
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "cookies",
+        "scripting",
+        "storage"
+    ]
+}
