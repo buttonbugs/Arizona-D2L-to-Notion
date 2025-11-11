@@ -198,9 +198,7 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 3. Scroll to `Internal Integration Secret`
 
-4. Click `show` and then `copy`
-
-$${\color{red}DO\ NOT\ share\ it\ with\ anyone\ else}$$
+4. Click `show` and then `copy` ($${\color{red}DO\ NOT\ share\ it\ with\ anyone\ else}$$)
 
 <picture>
   <source
