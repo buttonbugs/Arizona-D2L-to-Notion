@@ -37,7 +37,7 @@ View what to do in your calendar
 # Download Chrome Extension
 ### Arizona D2L to Notion
 1. Go to [the latest release](https://github.com/buttonbugs/Arizona-D2L-to-Notion/releases) &rarr; `Assets`
-2. Click `Arizona_D2L_to_Notion.crx`
+2. Click `Arizona_D2L_to_Notion_x.x.x.crx`
 
 # Before You Use
 
@@ -160,10 +160,12 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 ## Setup Chrome Extension
 
-### 1. Open Chrome Extension Settings
-Input the link `chrome://extensions/` in the Chrome search bar and then ENTER (or go to `Chrome` &rarr; `Settings` &rarr; `Extensions`)
+### 1. Add the Chrome Extension to Chrome
+1. Open Chrome Extension Settings
+   
+    You can input the link `chrome://extensions/` in the Chrome search bar and then ENTER (or go to `Chrome` &rarr; `Settings` &rarr; `Extensions`)
 
-### 2. Turn On Developer Mode
+2. Turn On Developer Mode
 <picture>
   <source
     srcset="README/02_2_open_extension_tab_dark.png"
@@ -175,11 +177,16 @@ Input the link `chrome://extensions/` in the Chrome search bar and then ENTER (o
   />
 </picture>
 
-### 3. Add .crx File to Chrome
-Drag the [Arizona_D2L_to_Notion.crx](#download-chrome-extension) file you've downloaded into the browser and click `Add extension`
+3. Drag the [Arizona_D2L_to_Notion_x.x.x.crx](#download-chrome-extension) file you've downloaded into the browser and click `Add extension`
 
-## Setup D2L Brightspace
+### 2. Copy Notion API Token to the Extension
 
-1. A
+### 3. Copy Notion Data Source ID to the Extension
+
+### 4. Copy Notion Database ID to the Extension
+
+## Add Courses to Sync
+
+### 1. Open Arizona D2L Brightspace
 
 # How To Use
