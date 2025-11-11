@@ -324,7 +324,37 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 ## Add Courses to Sync
 
-### 1. Open Arizona D2L Brightspace
+1. Open Arizona D2L Brightspace
+
+2. Click one of the courses you want the extension to sync
+
+3. Open the extension
+
+4. Click `+` to the right of the course you want to add
+
+<picture>
+  <source
+    srcset="README/03_1_add_course_1_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/03_1_add_course_1.png"
+    alt="alt"
+  />
+</picture>
+
+5. Repeat `2.` to `4.` for other courses you want add
+
+<picture>
+  <source
+    srcset="README/03_1_add_course_2_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/03_1_add_course_2.png"
+    alt="alt"
+  />
+</picture>
 
 # How To Use
 
