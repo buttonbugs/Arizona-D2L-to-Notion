@@ -200,6 +200,8 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 4. Click `show` and then `copy`
 
+$${\color{red}DO\ NOT\ share\ it\ with\ anyone\ else}$$
+
 <picture>
   <source
     srcset="README/02_2_4_copy_token_dark.png"
@@ -278,6 +280,49 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 </picture>
 
 ### 4. Copy Notion Database ID to the Extension
+
+1. Go back to the database [you've duplicated](#3-duplicate-database-template) in Notion Desktop App
+
+2. Go to `...` &rarr; `Copy link`
+
+<picture>
+  <source
+    srcset="README/02_3_4_copy_database_id_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_3_4_copy_database_id_dark.png"
+    alt="alt"
+  />
+</picture>
+
+3. Paste the link in Chrome search bar
+
+4. Copy the part after `https://www.notion.so/username/` and before `?v=`
+
+<picture>
+  <source
+    srcset="README/02_3_4_copy_part_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_3_4_copy_part.png"
+    alt="alt"
+  />
+</picture>
+
+5. Open the extension and paste that part in `Database ID`
+
+<picture>
+  <source
+    srcset="README/02_3_4_paste_part_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_3_4_paste_part.png"
+    alt="alt"
+  />
+</picture>
 
 ## Add Courses to Sync
 
