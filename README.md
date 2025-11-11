@@ -291,7 +291,7 @@ $${\color{red}DO\ NOT\ share\ it\ with\ anyone\ else}$$
     media="(prefers-color-scheme: dark)"
   />
   <img
-    src="README/02_3_4_copy_database_id_dark.png"
+    src="README/02_3_4_copy_database_id.png"
     alt="alt"
   />
 </picture>
