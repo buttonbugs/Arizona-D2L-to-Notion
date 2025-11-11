@@ -47,10 +47,10 @@ View what to do in your [calendar](https://www.notion.com/help/calendars)
 Go to `https://www.notion.com/download` to download Notion Desktop App
 
 ### 2. Add Notion Account
-Open Notion Desktop App and follow the instructions to sign up or log in
+Open Notion Desktop App and follow the instructions to sign up or log in ([Free plan](https://www.notion.com/pricing) is enough)
 
 ### 3. Duplicate Database Template
-1. Go to `https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112`
+1. Go to [D2L Brightspace (Template)](https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112)
 2. Click <a href="#3-duplicate-database-template"><img src="README/01_3_duplicate.svg" width="16"></a> in the upper right corner
 
 <picture>
@@ -81,7 +81,7 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 1. Open the database [you've duplicated](#3-duplicate-database-template) in Notion Desktop App
 
-2. Go to `...` &rarr; `Connections` &rarr; `Develop integrations` or go to `https://www.notion.so/profile/integrations/`
+2. Go to `...` &rarr; `Connections` &rarr; `Develop integrations` or go to [Marketplace Profile | Notion](https://www.notion.so/profile/integrations/)
 
 <picture>
   <source
@@ -379,14 +379,16 @@ Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notio
 
 ### Dos
 
-- Change the database's name and icon
+- Change the database's name and [icon](https://www.notion.com/help/customize-and-style-your-content#page-icons-and-emojis)
 - Add or change the cover and description of the database
 - Change the task name
 - Change the task status when the task is not finished
 - Change the task type
+- Add a task that does not exist in D2L
 - Add or change due date to a task if it does not have a due date in D2L
 - Add or change link to a task if it does not have a link in D2L
-- Add or change properties beyond the template
+- Add or change [properties](https://www.notion.com/help/database-properties) beyond the template
+- Change the colors and icons of the [properties](https://www.notion.com/help/database-properties)
 - Writing content in the database's [subpage](https://www.notion.com/help/intro-to-databases#add-and-open-database-pages)
 
 ### Don'ts
@@ -394,7 +396,8 @@ Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notio
 - Change the course name if the its original name is in sync list
 - Change the task's due date if the task has a due date in D2L
 - Change link to a task if it the task has a link in D2L
-- Change properties existing in the [template](https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112)
+- Change properties existing in [the template](https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112)
+- Refresh the Internal Integration Secret (If you did refresh it, please copy the Notion API Token again)
 
 ## Learn More about Notion Database
-Want to learn more about Notion Database to increase your efficiency? Visit [Intro to databases](https://www.notion.com/help/intro-to-databases)!
+Want to learn more about [Notion Database](https://www.notion.com/help/category/databases) to improve your efficiency and productivity? Visit [Intro to databases](https://www.notion.com/help/intro-to-databases)!
