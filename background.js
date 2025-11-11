@@ -274,7 +274,7 @@ async function fetchCourseDetail(tab) {
         course_list[index][3] = "green"
     }
     send_course_list()
-    notion_status[1][1] = "Syncing course data ..."
+    notion_status[1][1] = "Syncing course data - 0.0%"
     notion_status[1][3] = "blue"
     send_notion_status()
     // add task_list to Notion
@@ -299,6 +299,7 @@ async function fetchCourseDetail(tab) {
             .then(response => {return response.json()})
             .then(data => {
                 notion_status[1][2] += 1
+                notion_status[1][1] = "Syncing course data - " + (notion_status[1][2]*100.0/task_list.length).toFixed(1) + "%"
                 if (notion_status[1][2] == task_list.length) {
                     notion_status[1][1] = "Synced " + new Date().toLocaleString()
                     notion_status[1][3] = "green"
@@ -331,6 +332,7 @@ async function fetchCourseDetail(tab) {
             .then(response => {return response.json()})
             .then(data => {
                 notion_status[1][2] += 1
+                notion_status[1][1] = "Syncing course data - " + (notion_status[1][2]*100.0/task_list.length).toFixed(1) + "%"
                 if (notion_status[1][2] == task_list.length) {
                     notion_status[1][1] = "Synced " + new Date().toLocaleString()
                     notion_status[1][3] = "green"
