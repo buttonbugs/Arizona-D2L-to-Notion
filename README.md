@@ -213,6 +213,31 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 5. Pin the extension's popup
 
+<picture>
+  <source
+    srcset="README/02_2_5_pin_crx_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_2_5_pin_crx.png"
+    alt="alt"
+  />
+</picture>
+
+6. Paste in `Notion API Token`
+
+<picture>
+  <source
+    srcset="README/02_2_6_paste_token_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_2_6_paste_token.png"
+    alt="alt"
+  />
+</picture>
+
+
 ### 3. Copy Notion Data Source ID to the Extension
 
 ### 4. Copy Notion Database ID to the Extension
