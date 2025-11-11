@@ -343,7 +343,7 @@ Open Notion Desktop App and follow the instructions to sign up or log in
   />
 </picture>
 
-5. Repeat Step `2.` to `4.` for other courses you want add
+5. Repeat Step `2.` to `4.` for other courses you want to add
 <!--
 <picture>
   <source
