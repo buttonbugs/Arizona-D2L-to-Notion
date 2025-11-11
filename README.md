@@ -329,3 +329,5 @@ $${\color{red}DO\ NOT\ share\ it\ with\ anyone\ else}$$
 ### 1. Open Arizona D2L Brightspace
 
 # How To Use
+
+Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notion` extension will automatically sync your course data to the Notion database, so no further action is required.
