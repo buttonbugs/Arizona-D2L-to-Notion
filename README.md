@@ -177,7 +177,7 @@ Open Notion Desktop App and follow the instructions to sign up or log in
   />
 </picture>
 
-3. Drag the [Arizona_D2L_to_Notion_x.x.x.crx](#download-chrome-extension) file you've downloaded into the browser and click `Add extension`
+3. Drag the `Arizona_D2L_to_Notion_x.x.x.crx` file [you've downloaded](#download-chrome-extension) into the browser and click `Add extension`
 
 ### 2. Copy Notion API Token to the Extension
 
