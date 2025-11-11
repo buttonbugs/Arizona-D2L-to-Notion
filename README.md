@@ -181,6 +181,14 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 ### 2. Copy Notion API Token to the Extension
 
+1. Go to `https://www.notion.so/profile/integrations/`
+
+2. Click the integration created [just now](#4-setup-notion-integration)
+
+3. Click `show` Internal Integration Secret
+
+4. Click `copy`
+
 ### 3. Copy Notion Data Source ID to the Extension
 
 ### 4. Copy Notion Database ID to the Extension
