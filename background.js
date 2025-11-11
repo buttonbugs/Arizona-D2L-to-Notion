@@ -381,12 +381,14 @@ function sync_data(tab) {
                 chrome.storage.local.get(["notion_settings_database"], (result) => {
                     database_id = result["notion_settings_database"] || "";
                     
-                    try {
-                        fetchCourseDetail(tab);
-                    } catch (error) {
-                        host_log (tab, "crx error")
-                        notion_status[1][3] = "red"
-                        send_notion_status()
+                    if (tab.url.includes("d2l.arizona.edu")) {
+                        try {
+                            fetchCourseDetail(tab);
+                        } catch (error) {
+                            host_log (tab, "crx error")
+                            notion_status[1][3] = "red"
+                            send_notion_status()
+                        }
                     }
                 })
             })
@@ -396,7 +398,7 @@ function sync_data(tab) {
 
 //Triggers when webpage loads
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (changeInfo.status === "complete" && tab.url.includes("d2l.arizona.edu")) {
+    if (changeInfo.status === "complete") {
         sync_data(tab)
     }
 })
