@@ -4,7 +4,7 @@
 [![manifest_version](https://img.shields.io/badge/manifest_version-3-orange.svg)](https://developer.chrome.com/docs/extensions)
 [![Version](https://img.shields.io/github/v/tag/buttonbugs/Arizona-D2L-to-Notion)](https://github.com/buttonbugs/D2L-Darkspace/releases)
 
-Arizona D2L to Notion is a chrome extension that can sync your Arizona D2L Brightspace course data (assignments, quizzes, exams, and submission status) into a Notion database.
+Arizona D2L to Notion is a chrome extension that can sync your [Arizona D2L Brightspace](https://d2l.arizona.edu/d2l/home) course data (assignments, quizzes, exams, and submission status) into a [Notion database](https://www.notion.com/help/intro-to-databases).
 ## Preview
 ### Table View
 View what to do as a [list](https://www.notion.com/help/tables) of tasks
@@ -44,10 +44,10 @@ View what to do in your [calendar](https://www.notion.com/help/calendars)
 ## Setup Notion Database
 
 ### 1. Download Notion Desktop App
-Go to `https://www.notion.com/download` to download Notion Desktop App
+Go to [https://www.notion.com/download](https://www.notion.com/download) to download Notion Desktop App
 
 ### 2. Add Notion Account
-Open Notion Desktop App and follow the instructions to sign up or log in ([Free plan](https://www.notion.com/pricing) is enough)
+Open Notion Desktop App and follow the instructions to sign up ([Free plan](https://www.notion.com/pricing) is enough) or log in
 
 ### 3. Duplicate Database Template
 1. Go to [D2L Brightspace (Template)](https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112)
