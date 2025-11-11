@@ -43,7 +43,7 @@ function load_course_list() {
         //addEventListener
         trash_element.addEventListener("click", ((index,event)=>{
             chrome.runtime.sendMessage({
-                action: "add_course",
+                action: "delete_course",
                 payload: index
             }, () => {})
         }).bind(null, index), false)
