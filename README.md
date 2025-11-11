@@ -330,4 +330,4 @@ $${\color{red}DO\ NOT\ share\ it\ with\ anyone\ else}$$
 
 # How To Use
 
-Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notion` extension will automatically sync your course data to the Notion database each time D2L loads, so no further action is required.
+Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notion` extension will automatically sync your course data to the Notion database each time D2L webpages load, so no further action is required.
