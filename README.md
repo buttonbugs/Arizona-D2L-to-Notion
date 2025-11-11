@@ -79,7 +79,7 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 ### 4. Setup Notion Integration
 
-1. Open the database you've duplicated in Notion Desktop App
+1. Open the database [you've duplicated](#3-duplicate-database-template) in Notion Desktop App
 
 2. Go to `...` &rarr; `Connections` &rarr; `Develop integrations` or go to `https://www.notion.so/profile/integrations/`
 
@@ -143,7 +143,7 @@ Open Notion Desktop App and follow the instructions to sign up or log in
   />
 </picture>
 
-7. Go back to the database you've duplicated in Notion Desktop App
+7. Go back to the database [you've duplicated](#3-duplicate-database-template) in Notion Desktop App
 
 8. Go to `...` &rarr; `Connections` &rarr; [The integration created [just now](#4-setup-notion-integration)] &rarr; `Confirm`
 
@@ -237,8 +237,45 @@ Open Notion Desktop App and follow the instructions to sign up or log in
   />
 </picture>
 
-
 ### 3. Copy Notion Data Source ID to the Extension
+
+1. Go back to the database [you've duplicated](#3-duplicate-database-template) in Notion Desktop App
+
+2. Go to <img scr="README/02_3_2_data_sourse_settings_dark.png" width="16"> &rarr; `Manage data sources` &rarr; `...` &rarr; `Copy data source ID`
+
+<picture>
+  <source
+    srcset="README/02_3_2_data_sourse_settings_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_3_2_data_sourse_settings.png"
+    alt="alt"
+  />
+</picture>
+<picture>
+  <source
+    srcset="README/02_3_2_copy_data_source_id_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_3_2_copy_data_source_id.png"
+    alt="alt"
+  />
+</picture>
+
+3. Go back to the Chrome extension popup and paste it in `Data Source ID`
+
+<picture>
+  <source
+    srcset="README/02_3_3_paste_data_source_id_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_3_3_paste_data_source_id.png"
+    alt="alt"
+  />
+</picture>
 
 ### 4. Copy Notion Database ID to the Extension
 
