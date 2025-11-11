@@ -7,7 +7,7 @@
 Arizona D2L to Notion is a chrome extension that can sync your Arizona D2L Brightspace course data (assignments, quizzes, exams, and submission status) into a Notion database.
 ## Preview
 ### Table View
-View what to do as a list of tasks
+View what to do as a [list](https://www.notion.com/help/tables) of tasks
 
 <picture>
     <source
@@ -21,7 +21,7 @@ View what to do as a list of tasks
 </picture>
 
 ### Calendar View
-View what to do in your calendar
+View what to do in your [calendar](https://www.notion.com/help/calendars)
 
 <picture>
     <source
@@ -367,6 +367,34 @@ Open Notion Desktop App and follow the instructions to sign up or log in
   />
 </picture>
 
-# How To Use
+### Finished? Great job👍!
+
+Now the extension will automatically sync your course data to the Notion database each time D2L webpages load.
+
+# Tips
 
 Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notion` extension will automatically sync your course data to the Notion database each time D2L webpages load, so no further action is required.
+
+## Dos and Don'ts
+
+### Dos
+
+- Change the database's name and icon
+- Add or change the cover and description of the database
+- Change the task name
+- Change the task status when the task is not finished
+- Change the task type
+- Add or change due date to a task if it does not have a due date in D2L
+- Add or change link to a task if it does not have a link in D2L
+- Add or change properties beyond the template
+- Writing content in the database's [subpage](https://www.notion.com/help/intro-to-databases#add-and-open-database-pages)
+
+### Don'ts
+
+- Change the course name if the its original name is in sync list
+- Change the task's due date if the task has a due date in D2L
+- Change link to a task if it the task has a link in D2L
+- Change properties existing in the [template](https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112)
+
+## Learn More about Notion Database
+Want to learn more about Notion Database to increase your efficiency? Visit [Intro to databases](https://www.notion.com/help/intro-to-databases)!
