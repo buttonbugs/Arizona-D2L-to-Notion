@@ -168,11 +168,11 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 2. Turn On Developer Mode
 <picture>
   <source
-    srcset="README/02_2_open_extension_tab_dark.png"
+    srcset="README/02_1_2_open_extension_tab_dark.png"
     media="(prefers-color-scheme: dark)"
   />
   <img
-    src="README/02_2_open_extension_tab.png"
+    src="README/02_1_2_open_extension_tab.png"
     alt="alt"
   />
 </picture>
@@ -184,6 +184,17 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 1. Go to `https://www.notion.so/profile/integrations/`
 
 2. Click the integration created [just now](#4-setup-notion-integration)
+
+<picture>
+  <source
+    srcset="README/02_2_2_go_to_integration_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_2_2_go_to_integration.png"
+    alt="alt"
+  />
+</picture>
 
 3. Click `show` Internal Integration Secret
 
