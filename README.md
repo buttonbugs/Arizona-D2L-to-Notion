@@ -196,9 +196,21 @@ Open Notion Desktop App and follow the instructions to sign up or log in
   />
 </picture>
 
-3. Click `show` Internal Integration Secret
+3. Scroll to `Internal Integration Secret`
 
-4. Click `copy`
+4. Click `show` and then `copy`
+
+<picture>
+  <source
+    srcset="README/02_2_4_copy_token_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_2_4_copy_token.png"
+    alt="alt"
+  />
+</picture>
+
 
 ### 3. Copy Notion Data Source ID to the Extension
 
