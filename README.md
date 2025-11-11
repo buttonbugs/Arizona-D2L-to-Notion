@@ -177,7 +177,7 @@ Open Notion Desktop App and follow the instructions to sign up or log in
   />
 </picture>
 
-3. Drag the [Arizona_D2L_to_Notion_x.x.x.crx](#download-chrome-extension) file you've downloaded into the browser and click `Add extension`
+3. Drag the `Arizona_D2L_to_Notion_x.x.x.crx` file [you've downloaded](#download-chrome-extension) into the browser and click `Add extension`
 
 ### 2. Copy Notion API Token to the Extension
 
@@ -198,7 +198,7 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 3. Scroll to `Internal Integration Secret`
 
-4. Click `show` and then `copy`
+4. Click `show` and then `copy` ($${\color{red}DO\ NOT\ share\ it\ with\ anyone\ else}$$)
 
 <picture>
   <source
@@ -279,8 +279,53 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 
 ### 4. Copy Notion Database ID to the Extension
 
+1. Go back to the database [you've duplicated](#3-duplicate-database-template) in Notion Desktop App
+
+2. Go to `...` &rarr; `Copy link`
+
+<picture>
+  <source
+    srcset="README/02_3_4_copy_database_id_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_3_4_copy_database_id.png"
+    alt="alt"
+  />
+</picture>
+
+3. Paste the link in Chrome search bar
+
+4. Copy the part after `https://www.notion.so/username/` and before `?v=`
+
+<picture>
+  <source
+    srcset="README/02_3_4_copy_part_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_3_4_copy_part.png"
+    alt="alt"
+  />
+</picture>
+
+5. Open the extension and paste that part in `Database ID`
+
+<picture>
+  <source
+    srcset="README/02_3_4_paste_part_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/02_3_4_paste_part.png"
+    alt="alt"
+  />
+</picture>
+
 ## Add Courses to Sync
 
 ### 1. Open Arizona D2L Brightspace
 
 # How To Use
+
+Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notion` extension will automatically sync your course data to the Notion database each time D2L webpages load, so no further action is required.
