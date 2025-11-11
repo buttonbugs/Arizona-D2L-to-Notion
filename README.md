@@ -211,6 +211,7 @@ Open Notion Desktop App and follow the instructions to sign up or log in
   />
 </picture>
 
+5. Pin the extension's popup
 
 ### 3. Copy Notion Data Source ID to the Extension
 
