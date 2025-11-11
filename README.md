@@ -356,6 +356,17 @@ Open Notion Desktop App and follow the instructions to sign up or log in
   />
 </picture>
 
+<picture>
+  <source
+    srcset="README/03_1_add_course_6_dark.png"
+    media="(prefers-color-scheme: dark)"
+  />
+  <img
+    src="README/03_1_add_course_6.png"
+    alt="alt"
+  />
+</picture>
+
 # How To Use
 
 Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notion` extension will automatically sync your course data to the Notion database each time D2L webpages load, so no further action is required.
