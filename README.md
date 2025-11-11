@@ -397,7 +397,7 @@ Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notio
 - Change the task's due date if the task has a due date in D2L
 - Change link to a task if it the task has a link in D2L
 - Change properties existing in [the template](https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112)
-- Refresh the Internal Integration Secret (If you did refresh it, please copy the Notion API Token again)
+- Refresh the [Internal Integration Secret](https://developers.notion.com/docs/create-a-notion-integration#get-your-api-secret) (If you did refresh it, please [copy the Notion API Token again](#2-copy-notion-api-token-to-the-extension))
 
 ## Learn More about Notion Database
 Want to learn more about [Notion Database](https://www.notion.com/help/category/databases) to improve your efficiency and productivity? Visit [Intro to databases](https://www.notion.com/help/intro-to-databases)!
