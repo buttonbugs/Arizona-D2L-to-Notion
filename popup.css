@@ -1,0 +1,152 @@
+html{
+    overflow-y: visible;
+    overflow-x: hidden;
+    scrollbar-width: 0;
+}
+body {
+    min-width: 410px;
+    margin: 4px;
+}
+body > div {
+    width: 400px;
+    display: flex;
+    flex-direction: row;
+    margin: 5px auto;
+}
+input {
+    background: rgba(127, 127, 127, .2);
+    border: 0;
+}
+.title {
+    height: 50px;
+    justify-content: center;
+}
+.title > img {
+    height: 100%;
+}
+.title > div {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 40px;
+}
+.title > div > strong {
+    margin-left: 10px;
+}
+.long {
+    height: 28px;
+    display: flex;
+    flex-direction: row;
+    margin: 2px auto;
+}
+.long > div {
+    width: 120px;
+    padding: 8px 0;
+    font-weight: 600;
+}
+.long > input {
+    width: 260px;
+    /* border: 1px solid #8882; */
+    border: 0;
+    border-radius: 6px;
+    float: right;
+    padding: 0 6px;
+}
+.setting_parent {
+    margin: 0 0 0 auto;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#add_course {
+    font-size: 20px;
+    /* height: 60px; */
+    flex-direction: column;
+}
+#course_list_title {
+    font-size: 20px;
+    height: 30px;
+}
+#d2l_and_notion {
+    font-size: 20px;
+    flex-direction: column;
+}
+#notion_settings {
+    width: 100%;
+    flex-direction: column;
+    transition: all .2s;
+}
+#notion_settings_button {
+    margin: auto;
+    width: 24px;
+    height: 24px;
+    filter: grayscale(1);
+    transition: all .2s;
+}
+#notion_settings_button:hover {
+    width: 30px;
+    height: 30px;
+    filter: grayscale(0);
+}
+.course_list {
+    flex-direction: column;
+    text-wrap: no-wrap;
+}
+.course_list > div {
+    padding: 4px;
+    width: 100%;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 10px;
+    transition: all .2s;
+}
+.course_list > div:hover {
+    background-color: #8882;
+}
+.course_list > div > div:first-child {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.course_list > div > div:first-child > span{
+    font-size: 16px;
+    position: absolute;
+}
+.course_list > div > div:nth-child(2) {
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+.course_list > div > div:nth-child(2) > div:first-child {
+    font-size: 16px;
+}
+.course_list > div > div:nth-child(2) > div:last-child {
+    font-size: 10px;
+    color: gray;
+}
+.course_list > div > img {
+    margin: 3px 3px 3px 3px;
+    height: 24px;
+    filter: grayscale(1);
+    transition: all 0.2s;
+}
+.course_list > div > img:hover {
+    margin: 0 0 0 0;
+    height: 30px;
+    filter: grayscale(0);
+}
+@media (prefers-color-scheme: dark) {
+    html {
+        background: black;
+        color: white;
+    }
+    input {
+        color: white;
+    }
+}

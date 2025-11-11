@@ -12,8 +12,14 @@ const notion_query_data_sourse_url_p1 = "https://api.notion.com/v1/data_sources/
 const notion_query_data_sourse_url_p2 = "/query"
 const notion_create_page_url = `https://api.notion.com/v1/pages`
 const notion_update_page_url = `https://api.notion.com/v1/pages/`
+//notion api settings
+const notion_page_size = 100
 //course list
 var course_list = []
+var notion_status = [
+    ["From Notion Database", "Loading ...", 0, "green"],
+    ["To Notion Database", "Loading ...", 0, "green"]
+]
 //Notion
 var NOTION_TOKEN = ""
 var data_source_id = ""
@@ -59,24 +65,48 @@ function task_exist(tab, new_task, notion_result) {
 
 function send_course_list() {
     chrome.storage.local.set({ "course_list": course_list }, () => {
-        chrome.runtime.sendMessage({ action: "updata_sync_status" }, (response) => {})
+        chrome.runtime.sendMessage({ action: "update_course_status" }, () => {})
+    })
+}
+
+function send_notion_status() {
+    chrome.storage.local.set({ "notion_status": notion_status }, () => {
+        chrome.runtime.sendMessage({ action: "update_notion_status" }, () => {})
     })
 }
 
 async function fetchCourseDetail(tab) {
     //fetch more than 100 result
+    var task_list = []
     var notion_result = []
     var notion_response = {}
     var next_cursor = ""
     var has_more = true
+
+    //reset notion sync status
+    notion_status = [
+        ["From Notion Database", "Loading ...", 0, "blue"],
+        ["To Notion Database", "Wait ...", 0, "orange"]
+    ]
+    send_notion_status()
     while (has_more) {
+        //fetch data from notion
         notion_response = await fetchNotion(tab, next_cursor)
         notion_result.push(...notion_response.results)
+
+        //change cursor
         next_cursor = notion_response.next_cursor
         has_more = notion_response.has_more
+
+        //update notion status
+        notion_status[0][2] = notion_result.length
+        send_notion_status()
     }
-    var task_list = []
-    //reset sync status
+    notion_status[0][1] = "Synced " + new Date().toLocaleString()
+    notion_status[0][3] = "green"
+    notion_status[1][1] = "Fetching course data ..."
+    send_notion_status()
+    //reset course sync status
     for (const index in course_list) {
         course_list[index][2] = 0
         course_list[index][3] = "orange"
@@ -106,14 +136,20 @@ async function fetchCourseDetail(tab) {
                         }
                     },
                     function(task_list) {
-                        course_list[index][2] += task_list.length
-                        course_list[index][3] = "orange"
-                        send_course_list()
-                        resolve(task_list);
+                        if (task_list) {
+                            course_list[index][2] += task_list.length
+                            course_list[index][3] = "orange"
+                            send_course_list()
+                            resolve(task_list);
+                        } else {
+                            resolve([]);
+                        }
                     }
                 )
             }))
         } catch (error) {
+            course_list[index][3] = "red"
+            send_course_list()
             host_log(tab, "Parse Assignments webpage error")
         }
     }
@@ -142,14 +178,20 @@ async function fetchCourseDetail(tab) {
                         }
                     },
                     function(task_list) {
-                        course_list[index][2] += task_list.length
-                        course_list[index][3] = "orange"
-                        send_course_list()
-                        resolve(task_list);
+                        if (task_list) {
+                            course_list[index][2] += task_list.length
+                            course_list[index][3] = "orange"
+                            send_course_list()
+                            resolve(task_list);
+                        } else {
+                            resolve([]);
+                        }
                     }
                 )
             }))
         } catch (error) {
+            course_list[index][3] = "red"
+            send_course_list()
             host_log(tab, "Parse Discussions webpage error")
         }
     }
@@ -179,14 +221,20 @@ async function fetchCourseDetail(tab) {
                         }
                     },
                     function(task_list) {
-                        course_list[index][2] += task_list.length
-                        course_list[index][3] = "orange"
-                        send_course_list()
-                        resolve(task_list);
+                        if (task_list) {
+                            course_list[index][2] += task_list.length
+                            course_list[index][3] = "orange"
+                            send_course_list()
+                            resolve(task_list);
+                        } else {
+                            resolve([]);
+                        }
                     }
                 )
             }))
         } catch (error) {
+            course_list[index][3] = "red"
+            send_course_list()
             host_log(tab, "Parse Quiz webpage error")
         }
     }
@@ -221,6 +269,14 @@ async function fetchCourseDetail(tab) {
         }))
         host_log(tab, new_task)
     }
+    //set course sync status to green
+    for (const index in course_list) {
+        course_list[index][3] = "green"
+    }
+    send_course_list()
+    notion_status[1][1] = "Syncing course data ..."
+    notion_status[1][3] = "blue"
+    send_notion_status()
     // add task_list to Notion
     for (const new_task of task_list) {
         let existing_task = task_exist(tab, new_task, notion_result)
@@ -242,7 +298,12 @@ async function fetchCourseDetail(tab) {
             })
             .then(response => {return response.json()})
             .then(data => {
-                //updated
+                notion_status[1][2] += 1
+                if (notion_status[1][2] == task_list.length) {
+                    notion_status[1][1] = "Synced " + new Date().toLocaleString()
+                    notion_status[1][3] = "green"
+                }
+                send_notion_status()
             })
         } else {
             let properties = {
@@ -269,18 +330,22 @@ async function fetchCourseDetail(tab) {
             })
             .then(response => {return response.json()})
             .then(data => {
+                notion_status[1][2] += 1
+                if (notion_status[1][2] == task_list.length) {
+                    notion_status[1][1] = "Synced " + new Date().toLocaleString()
+                    notion_status[1][3] = "green"
+                }
+                send_notion_status()
             })
         }
     }
-    //set sync status to green
-    for (const index in course_list) {
-        course_list[index][3] = "green"
-    }
-    send_course_list()
+    //set notion sync status to green
+    // notion_status[1][3] = "green"
+    // send_notion_status()
 }
 
 async function fetchNotion(tab, next_cursor = "") {
-    var body = {"page_size": 10}
+    var body = {"page_size": notion_page_size}
     if (next_cursor) {
         body["start_cursor"] = next_cursor
     }
@@ -296,32 +361,60 @@ async function fetchNotion(tab, next_cursor = "") {
     const data = await response.json();
     return data
 }
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-    if (changeInfo.status === "complete" && tab.url.includes("d2l.arizona.edu")) {
-        //load course list storage
-        chrome.storage.local.get(["course_list"], (result) => {
-            course_list = result["course_list"] || [];
 
-            //load NOTION_TOKEN
-            chrome.storage.local.get(["notion_settings_token"], (result) => {
-                NOTION_TOKEN = result["notion_settings_token"] || "";
-
-                //load data_source_id
-                chrome.storage.local.get(["notion_settings_data_sourse"], (result) => {
-                    data_source_id = result["notion_settings_data_sourse"] || "";
-
-                    //load database_id
-                    chrome.storage.local.get(["notion_settings_database"], (result) => {
-                        database_id = result["notion_settings_database"] || "";
-                        
-                        try {
-                            fetchCourseDetail(tab);
-                        } catch (error) {
-                            host_log (tab, "crx error")
-                        }
-                    })
+function sync_data(tab) {
+    //load course list storage
+    chrome.storage.local.get(["course_list"], (result) => {
+        course_list = result["course_list"] || [];
+    
+        //load NOTION_TOKEN
+        chrome.storage.local.get(["notion_settings_token"], (result) => {
+            NOTION_TOKEN = result["notion_settings_token"] || "";
+    
+            //load data_source_id
+            chrome.storage.local.get(["notion_settings_data_sourse"], (result) => {
+                data_source_id = result["notion_settings_data_sourse"] || "";
+    
+                //load database_id
+                chrome.storage.local.get(["notion_settings_database"], (result) => {
+                    database_id = result["notion_settings_database"] || "";
+                    
+                    try {
+                        fetchCourseDetail(tab);
+                    } catch (error) {
+                        host_log (tab, "crx error")
+                        notion_status[1][3] = "red"
+                        send_notion_status()
+                    }
                 })
             })
         })
+    })
+}
+
+//Triggers when webpage loads
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (changeInfo.status === "complete" && tab.url.includes("d2l.arizona.edu")) {
+        sync_data(tab)
+    }
+})
+
+//Receive messages
+chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
+    if (message.action === "add_course") {
+        course_list.push(message.payload)
+        send_course_list()
+        sendResponse()
+    } else if (message.action === "delete_course") {
+        course_list.splice(message.payload, 1)
+        send_course_list()
+        sendResponse()
+    } else if (message.action === "resync") {
+        if (notion_status[1][3] == "green") {
+            chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
+                sync_data(tabs[0])
+            })
+        }
+        sendResponse()
     }
 });

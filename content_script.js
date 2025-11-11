@@ -108,5 +108,4 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         } catch (error) {}
         sendResponse(task_list);
     }
-    return true; // needed if response is asynchronous
 });
