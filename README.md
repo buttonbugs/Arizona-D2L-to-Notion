@@ -344,7 +344,7 @@ Open Notion Desktop App and follow the instructions to sign up or log in
 </picture>
 
 5. Repeat Step `2.` to `4.` for other courses you want add
-
+<!--
 <picture>
   <source
     srcset="README/03_1_add_course_2_dark.png"
@@ -355,7 +355,7 @@ Open Notion Desktop App and follow the instructions to sign up or log in
     alt="alt"
   />
 </picture>
-
+-->
 <picture>
   <source
     srcset="README/03_1_add_course_6_dark.png"
