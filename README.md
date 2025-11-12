@@ -52,7 +52,7 @@ Open Notion Desktop App and follow the instructions to sign up ([Free plan](http
 
 ### 3. Duplicate Database Template
 1. Go to [D2L Brightspace (Template)](https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112)
-2. Click <a href="#3-duplicate-database-template"><img src="README/01_3_duplicate.svg" width="16"></a> in the upper right corner
+2. Click <a href="#"><img src="README/01_3_duplicate.svg" width="16"></a> in the upper right corner
 
 <picture>
   <source
@@ -242,7 +242,7 @@ Open Notion Desktop App and follow the instructions to sign up ([Free plan](http
 
 1. Go back to the database [you've duplicated](#3-duplicate-database-template) in Notion Desktop App
 
-2. Go to <img scr="README/02_3_2_data_sourse_settings_dark.png" width="16"> &rarr; `Manage data sources` &rarr; `...` &rarr; `Copy data source ID`
+2. Go to <img scr="README/02_3_2_data_sourse_settings_icon.svg" width="16"> &rarr; `Manage data sources` &rarr; `...` &rarr; `Copy data source ID`
 
 <picture>
   <source
