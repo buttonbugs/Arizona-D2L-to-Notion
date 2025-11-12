@@ -396,7 +396,7 @@ Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notio
 
 **Numbers**
 
-👉 The numbers refer to the numbers of tasks synced or processed
+The numbers refer to the numbers of tasks synced or processed
 
 ### Functions
 
