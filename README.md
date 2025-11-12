@@ -242,7 +242,7 @@ Open Notion Desktop App and follow the instructions to sign up ([Free plan](http
 
 1. Go back to the database [you've duplicated](#3-duplicate-database-template) in Notion Desktop App
 
-2. Go to <a><img scr="README/02_3_2_data_sourse_settings_icon.svg" width="16"></a> &rarr; `Manage data sources` &rarr; `...` &rarr; `Copy data source ID`
+2. Go to <a href="#"><img scr="sync_red" width="16"></a> &rarr; `Manage data sources` &rarr; `...` &rarr; `Copy data source ID`
 
 <picture>
   <source
