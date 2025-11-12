@@ -376,6 +376,49 @@ Now the extension will automatically sync your course data to the Notion databas
 
 Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notion` extension will automatically sync your course data to the Notion database each time D2L webpages load, so no further action is required.
 
+## How to use
+
+### Understand Visual Elements
+
+**Colors**
+
+<a href="#"><img src="sync_green.svg" width="18"></a>
+ Completed
+
+<a href="#"><img src="sync_blue.svg" width="18"></a>
+ In progress
+
+<a href="#"><img src="sync_orange.svg" width="18"></a>
+ Waiting
+
+<a href="#"><img src="sync_red.svg" width="18"></a>
+ Error
+
+**Numbers**
+
+👉 The numbers refer to the numbers of tasks synced or processed
+
+### Functions
+
+**Quickly Open Course Homepages**
+
+Click the course name of the course in sync list that you want to open.
+
+**Remove Course from Sync List**
+
+Click the trash can icon (<a href="#"><img src="trash.svg" width="18"></a>) to the right
+
+**Resync**
+
+Click `From Notion Database` or `To Notion Databse` to start resyncing
+
+**Quickly Open Database**
+
+Click the Notion icon (<a href="#"><img src="notion.png" width="18"></a>) to the right of `From Notion Database` or `To Notion Databse`
+
+### Notion Database
+Want to learn more about [Notion Database](https://www.notion.com/help/category/databases) to improve your efficiency and productivity? Visit [Intro to databases](https://www.notion.com/help/intro-to-databases)!
+
 ## Dos and Don'ts
 
 ### Dos
@@ -400,5 +443,3 @@ Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notio
 - Change properties existing in [the template](https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112)
 - Refresh the [Internal Integration Secret](https://developers.notion.com/docs/create-a-notion-integration#get-your-api-secret) (If you did refresh it, please [copy the Notion API Token again](#2-copy-notion-api-token-to-the-extension))
 
-## Learn More about Notion Database
-Want to learn more about [Notion Database](https://www.notion.com/help/category/databases) to improve your efficiency and productivity? Visit [Intro to databases](https://www.notion.com/help/intro-to-databases)!
