@@ -402,19 +402,19 @@ Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notio
 
 **Quickly Open Course Homepages**
 
-Click the course name of the course in sync list that you want to open.
+👉 Click the course name of the course in sync list that you want to open.
 
 **Remove Course from Sync List**
 
-Click the trash can icon (<a href="#"><img src="trash.svg" width="18"></a>) to the right
+👉 Click <a href="#"><img src="trash.svg" width="16"></a>
 
 **Resync**
 
-Click `From Notion Database` or `To Notion Databse` to start resyncing
+👉 Click `From Notion Database` or `To Notion Databse` to start resyncing
 
 **Quickly Open Database**
 
-Click the Notion icon (<a href="#"><img src="notion.png" width="18"></a>) to the right of `From Notion Database` or `To Notion Databse`
+👉 Click <a href="#"><img src="notion.png" width="18"></a> to the right of `From Notion Database` or `To Notion Databse`
 
 ### Notion Database
 Want to learn more about [Notion Database](https://www.notion.com/help/category/databases) to improve your efficiency and productivity? Visit [Intro to databases](https://www.notion.com/help/intro-to-databases)!
