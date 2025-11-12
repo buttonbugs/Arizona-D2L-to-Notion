@@ -3,7 +3,7 @@
 [![Chrome Extension](https://img.shields.io/badge/crx-Chrome%20Extension-blue.svg)](https://developer.chrome.com/docs/extensions)
 [![manifest_version](https://img.shields.io/badge/manifest_version-3-orange.svg)](https://developer.chrome.com/docs/extensions)
 [![Version](https://img.shields.io/github/v/tag/buttonbugs/Arizona-D2L-to-Notion)](https://github.com/buttonbugs/D2L-Darkspace/releases)
-[![Notion API](https://img.shields.io/badge/Notion%20API-Version20250903-blue.svg)](https://developers.notion.com/)
+[![Notion API](https://img.shields.io/badge/Notion%20API-Version%2020--25--09--03-blue.svg)](https://developers.notion.com/)
 
 Arizona D2L to Notion is a chrome extension that can sync your [Arizona D2L Brightspace](https://d2l.arizona.edu/d2l/home) course data (assignments, quizzes, exams, and submission status) into a [Notion database](https://www.notion.com/help/intro-to-databases).
 ## Preview
