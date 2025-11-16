@@ -1,3 +1,4 @@
+//constant
 //d2l url
 const d2l_host_name = "d2l.arizona.edu"
 const content_url_p1="https://d2l.arizona.edu/d2l/le/content/"
@@ -14,6 +15,8 @@ const notion_create_page_url = `https://api.notion.com/v1/pages`
 const notion_update_page_url = `https://api.notion.com/v1/pages/`
 //notion api settings
 const notion_page_size = 100
+
+//variable
 //course list
 var course_list = []
 var notion_status = [
@@ -24,6 +27,8 @@ var notion_status = [
 var NOTION_TOKEN = ""
 var data_source_id = ""
 var database_id = ""
+//status
+var popup_open = false
 
 // Trigger when pages load
 function host_log(tab,content) {
@@ -65,13 +70,17 @@ function task_exist(tab, new_task, notion_result) {
 
 function send_course_list() {
     chrome.storage.local.set({ "course_list": course_list }, () => {
-        chrome.runtime.sendMessage({ action: "update_course_status" }, () => {})
+        if (popup_open) {
+            chrome.runtime.sendMessage({ action: "update_course_status" }, (response) => {})
+        }
     })
 }
 
 function send_notion_status() {
     chrome.storage.local.set({ "notion_status": notion_status }, () => {
-        chrome.runtime.sendMessage({ action: "update_notion_status" }, () => {})
+        if (popup_open) {
+            chrome.runtime.sendMessage({ action: "update_notion_status" }, (response) => {})
+        }
     })
 }
 
@@ -419,6 +428,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 sync_data(tabs[0])
             })
         }
+        sendResponse()
+    } else if (message.action === "update_popup_status") {
+        popup_open = message.payload
         sendResponse()
     }
 });

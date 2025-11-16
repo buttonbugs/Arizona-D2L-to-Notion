@@ -48,8 +48,12 @@ function load_course_list() {
             }, () => {})
         }).bind(null, index), false)
 
+        sync_element.addEventListener("click", ((index,event)=>{
+            window.open(course_home_url + course_list[index][1])
+        }).bind(null, index), false)
+
         detail_element.addEventListener("click", ((index,event)=>{
-            window.open(course_home_url+course_list[index][1])
+            window.open(course_content_url + course_list[index][1] + "/Home")
         }).bind(null, index), false)
 
         //set content
@@ -243,3 +247,14 @@ chrome.storage.local.get(["course_list"], (result) => {
 });
 //load notion status
 load_notion_status()
+//get popup status
+chrome.runtime.sendMessage({
+    action: "update_popup_status",
+    payload: true
+});
+window.addEventListener("unload", () => {
+    chrome.runtime.sendMessage({
+        action: "update_popup_status",
+        payload: false
+    }, () => {});
+});
