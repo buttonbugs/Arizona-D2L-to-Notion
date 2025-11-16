@@ -450,7 +450,7 @@ Want to learn more about [Notion Database](https://www.notion.com/help/category/
 - Use it at your own risk. We are not responsible for any damage, data loss, or issues that may come from using this extension.
 
 ## Not affiliated with any company, organization or school
-- This project isn’t affiliated with or endorsed by any company or organization mentioned here. All trademarks belong to their respective owners.
+- This extension is not affiliated with or endorsed by any company or organization mentioned here. All trademarks belong to their respective owners.
 
 ## Perfect sync note guaranteed
 - Because D2L may update its website over time, this extension may not always sync every task correctly. We do not guarantee that the data in your Notion database will exactly match your D2L.
