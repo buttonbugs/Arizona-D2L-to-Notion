@@ -405,7 +405,7 @@ The numbers refer to the numbers of tasks synced or processed
 
 👉 Click the sync icon in sync list
 
-**Quickly Open Course Content Page**
+**Quickly Open Course Content Pages**
 
 👉 Click the course name in sync list
 
