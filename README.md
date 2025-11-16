@@ -403,7 +403,11 @@ The numbers refer to the numbers of tasks synced or processed
 
 **Quickly Open Course Homepages**
 
-👉 Click the course name of the course in sync list that you want to open.
+👉 Click the sync icon in sync list
+
+**Quickly Open Course Content Page**
+
+👉 Click the course name in sync list
 
 **Remove Course from Sync List**
 
