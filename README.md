@@ -461,4 +461,3 @@ Want to learn more about [Notion Database](https://www.notion.com/help/category/
 - Please do not rely on this extension as your only source of information.
 - We are not responsible if you miss an assignment because of a syncing error. We’re not responsible for any academic issues or failures that happen because of a syncing error.
 - Make sure to check D2L regularly so you don’t overlook anything. Use this extension at your own risk.
-
