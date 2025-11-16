@@ -452,7 +452,7 @@ Want to learn more about [Notion Database](https://www.notion.com/help/category/
 ## Not affiliated with any company, organization or school
 - This extension is not affiliated with or endorsed by any company or organization mentioned here. All trademarks belong to their respective owners.
 
-## Perfect sync note guaranteed
+## Exact sync not guaranteed
 - Because D2L may update its website over time, this extension may not always sync every task correctly. We do not guarantee that the data in your Notion database will exactly match your D2L.
 - Please do not rely on this extension as your only source of information.
 - We are not responsible if you miss an assignment because of a syncing error. Make sure to check D2L regularly so you don’t overlook anything. Use this extension at your own risk.
