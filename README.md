@@ -37,6 +37,7 @@ View what to do in your [calendar](https://www.notion.com/help/calendars)
 
 # Download Chrome Extension
 ### Arizona D2L to Notion
+Before you download, make sure you've read the [Disclaimer](#disclaimer)
 1. Go to [the latest release](https://github.com/buttonbugs/Arizona-D2L-to-Notion/releases) &rarr; `Assets`
 2. Click `Arizona_D2L_to_Notion_x.x.x.crx`
 
