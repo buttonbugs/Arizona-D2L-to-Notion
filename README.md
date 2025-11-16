@@ -443,3 +443,5 @@ Want to learn more about [Notion Database](https://www.notion.com/help/category/
 - Change properties existing in [the template](https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112)
 - Refresh the [Internal Integration Secret](https://developers.notion.com/docs/create-a-notion-integration#get-your-api-secret) (If you did refresh it, please [copy the Notion API Token again](#2-copy-notion-api-token-to-the-extension))
 
+# Note
+
