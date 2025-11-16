@@ -444,14 +444,14 @@ Want to learn more about [Notion Database](https://www.notion.com/help/category/
 - Refresh the [Internal Integration Secret](https://developers.notion.com/docs/create-a-notion-integration#get-your-api-secret) (If you did refresh it, please [copy the Notion API Token again](#2-copy-notion-api-token-to-the-extension))
 
 # Disclaimer
-### 1. Use it at your own risk
+## Use it at your own risk
 - This extension is provided “as is” without any guarantees or warranty.
 - Use it at your own risk. We are not responsible for any damage, data loss, or issues that may come from using this extension.
 
-### 2. Not affiliated with any company, organization or school
+## Not affiliated with any company, organization or school
 - This project isn’t affiliated with or endorsed by any company or organization mentioned here. All trademarks belong to their respective owners.
 
-### 3. Perfect sync note guaranteed
+## Perfect sync note guaranteed
 - Because D2L may update its website over time, this extension may not always sync every task correctly. We do not guarantee that the data in your Notion database will exactly match your D2L.
 - Please do not rely on this extension as your only source of information.
 - We are not responsible if you miss an assignment because of a syncing error. Make sure to check D2L regularly so you don’t overlook anything. Use this extension at your own risk.
