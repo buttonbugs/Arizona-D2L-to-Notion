@@ -37,6 +37,7 @@ View what to do in your [calendar](https://www.notion.com/help/calendars)
 
 # Download Chrome Extension
 ### Arizona D2L to Notion
+Before you download, make sure you've read the [Disclaimer](#disclaimer)
 1. Go to [the latest release](https://github.com/buttonbugs/Arizona-D2L-to-Notion/releases) &rarr; `Assets`
 2. Click `Arizona_D2L_to_Notion_x.x.x.crx`
 
@@ -442,4 +443,18 @@ Want to learn more about [Notion Database](https://www.notion.com/help/category/
 - Change link to a task if it the task has a link in D2L
 - Change properties existing in [the template](https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112)
 - Refresh the [Internal Integration Secret](https://developers.notion.com/docs/create-a-notion-integration#get-your-api-secret) (If you did refresh it, please [copy the Notion API Token again](#2-copy-notion-api-token-to-the-extension))
+
+# Disclaimer
+## Use it at your own risk
+- This extension is provided “as is” without any guarantees or warranty.
+- Use it at your own risk. We are not responsible for any damage, data loss, or issues that may come from using this extension.
+
+## Not affiliated with any company, organization or school
+- This extension is not affiliated with or endorsed by any company or organization mentioned here. All trademarks belong to their respective owners.
+
+## Exact sync not guaranteed
+- Because D2L may update its website over time, this extension may not always sync every task correctly. We do not guarantee that the data in your Notion database will exactly match your D2L.
+- Please do not rely on this extension as your only source of information.
+- We are not responsible if you miss an assignment because of a syncing error. We’re not responsible for any academic issues or failures that happen because of a syncing error.
+- Make sure to check D2L regularly so you don’t overlook anything. Use this extension at your own risk.
 
