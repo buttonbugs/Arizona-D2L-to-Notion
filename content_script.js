@@ -9,9 +9,24 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
             let tr_elements = doc.getElementById("z_a").firstChild.childNodes
 
             tr_elements.forEach(tr => {
-                if (tr.className == "") {
-                    let due_date_element = tr.firstChild.childNodes[3].getElementsByTagName("strong")[0]
-                    let due_date_string = due_date_element? new Date(due_date_element.innerText.split(" ").slice(2,5).join(" ")).toISOString().split('T')[0] : null
+
+                if (tr.className == "" || tr.className == "d2l-table-row-last") {
+                    var due_date_string = null
+                    let d2l_dates_text_element = tr.firstChild.childNodes[3].firstChild.firstChild
+                    if (d2l_dates_text_element) {
+                        let due_date_element_parent = d2l_dates_text_element.firstChild.firstChild
+                        let end_text = due_date_element_parent.text
+                        if (end_text) {
+                            try {
+                                due_date_string = new Date(end_text.split("Ends ")[1]).toISOString().split('T')[0]
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        } else {
+                            let due_date_element = due_date_element_parent.firstChild
+                            due_date_string = due_date_element? new Date(due_date_element.innerText.split(" ").slice(2,5).join(" ")).toISOString().split('T')[0] : null
+                        }
+                    }
                     let new_task = {
                         "Link": tr.getElementsByClassName("d2l-link-inline")[0].href,
                         "Status": tr.childNodes[1].firstChild.innerText.indexOf("Submission") > -1 ? "Done" : null,
@@ -23,7 +38,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                     task_list.push(new_task)
                 }
             });
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+        }
         sendResponse(task_list);
     } else if (message.action == "parse_Discussions") {
         var task_list = []
@@ -50,8 +67,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         let doc = parser.parseFromString(message.payload.html_text, "text/html");
         try {
             let tr_elements = doc.getElementById("z_b").firstChild.childNodes
+            console.log(message.payload.course_name);
             for (const tr of tr_elements) {
-                if (tr.className == "") {
+                if (tr.className == "" || tr.className == "d2l-table-row-last") {
                     //get link
                     let link_js = tr.getElementsByClassName("d2l-link-inline")[0].getAttribute("onclick")
                     let quiz_id = link_js.split("(")[1].split(",")[0]
