@@ -411,7 +411,7 @@ The numbers refer to the numbers of tasks synced or processed
 
 **Remove Course from Sync List**
 
-👉 Click <a href="#"><img src="trash.svg" width="16"></a>
+👉 Click <a href="#"><img src="icon/trash.svg" width="16"></a>
 
 **Resync**
 
