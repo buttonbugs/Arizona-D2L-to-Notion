@@ -84,7 +84,7 @@ function send_notion_status() {
     })
 }
 
-async function fetchCourseDetail(tab) {
+async function fetch_D2L_data(tab) {
     //fetch more than 100 result
     var task_list = []
     var notion_result = []
@@ -392,7 +392,7 @@ function sync_data(tab) {
                     
                     if (tab.url.includes("d2l.arizona.edu") && notion_status[1][3] != "orange") {
                         try {
-                            fetchCourseDetail(tab);
+                            fetch_D2L_data(tab);
                         } catch (error) {
                             host_log (tab, "crx error")
                             notion_status[1][3] = "red"
@@ -423,6 +423,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         send_course_list()
         sendResponse()
     } else if (message.action === "resync") {
+        // Triggers when "From/To Notion Database" button clicked
         if (notion_status[1][3] == "green") {
             chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
                 sync_data(tabs[0])

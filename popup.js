@@ -75,9 +75,9 @@ function load_course_list() {
         course_list_element.appendChild(course_element)
     }
     if (course_list.length == 0) {
-        document.getElementById("course_list_title").firstElementChild.innerHTML = "No course added to sync list"
+        document.getElementById("course_list_title").firstElementChild.innerHTML = "No course added to D2L sync list"
     } else {
-        document.getElementById("course_list_title").firstElementChild.innerHTML = "Sync List"
+        document.getElementById("course_list_title").firstElementChild.innerHTML = "D2L Sync List"
     }
 }
 
