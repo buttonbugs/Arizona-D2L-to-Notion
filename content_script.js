@@ -1,3 +1,4 @@
+const d2l_host_name = "https://d2l.arizona.edu" // DO NOT add "/" at the end
 const quiz_detail_url_p1 = "https://d2l.arizona.edu/d2l/lms/quizzing/user/quiz_summary.d2l?qi="
 const quiz_detail_url_p2 = "&ou="
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
@@ -27,13 +28,17 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                             due_date_string = due_date_element? new Date(due_date_element.innerText.split(" ").slice(2,5).join(" ")).toISOString().split('T')[0] : null
                         }
                     }
+                    let link_element = tr.getElementsByClassName("d2l-link-inline")[0]
                     let new_task = {
-                        "Link": tr.getElementsByClassName("d2l-link-inline")[0].href,
+                        "Link": link_element ? (d2l_host_name + link_element.getAttribute("href")) : null,
                         "Status": tr.childNodes[1].firstChild.innerText.indexOf("Submission") > -1 ? "Done" : null,
                         "Course": message.payload.course_name,
                         "Due Date": due_date_string,
                         "Type": null,
                         "Task": tr.getElementsByTagName("strong")[0].innerText
+                    }
+                    if (!link_element) {
+                        console.log(new_task);
                     }
                     task_list.push(new_task)
                 }
@@ -49,17 +54,20 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         try {
             let tr_elements = doc.getElementsByClassName("d2l-grid-row")
             for (const tr of tr_elements) {
+                let link_element = tr.getElementsByClassName("d2l-linkheading-link")[0]
                 let new_task = {
-                    "Link": tr.getElementsByClassName("d2l-linkheading-link")[0].href,
+                    "Link": d2l_host_name + link_element.getAttribute("href"),
                     "Status": null,
                     "Course": message.payload.course_name,
                     "Due Date": null,
                     "Type": "Discussion",
-                    "Task": tr.getElementsByClassName("d2l-linkheading-link")[0].innerText
+                    "Task": link_element.innerText
                 }
                 task_list.push(new_task)
             }
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+        }
         sendResponse(task_list);
     } else if (message.action == "parse_Quiz") {
         var task_list = []
@@ -94,7 +102,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                     task_list.push(new_task)
                 }
             }
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+        }
         sendResponse(task_list);
     } else if (message.action == "parse_Content") {
         var task_list = []
@@ -123,7 +133,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                     }
                 }
             }
-        } catch (error) {}
+        } catch (error) {
+            console.log(error);
+        }
         sendResponse(task_list);
     }
 });

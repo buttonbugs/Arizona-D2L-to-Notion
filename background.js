@@ -1,6 +1,5 @@
 //constant
 //d2l url
-const d2l_host_name = "d2l.arizona.edu"
 const content_url_p1="https://d2l.arizona.edu/d2l/le/content/"
 const content_url_p2="/Home"
 const content_json_url="/PartialMainView?identifier=TOC&moduleTitle=Table+of+Contents&_d2l_prc%24headingLevel=2&_d2l_prc%24scope=&_d2l_prc%24hasActiveForm=false&isXhr=true"
@@ -27,10 +26,8 @@ var notion_status = [
 var NOTION_TOKEN = ""
 var data_source_id = ""
 var database_id = ""
-//status
-var popup_open = false
 
-// Trigger when pages load
+// Log on behalf of host
 function host_log(tab,content) {
     chrome.scripting.executeScript({
         target: {tabId: tab.id},
@@ -41,6 +38,7 @@ function host_log(tab,content) {
     });
 }
 
+// Copy on behalf of host
 function host_copy(tab,content) {
     chrome.scripting.executeScript({
         target: {tabId: tab.id},
@@ -54,34 +52,25 @@ function host_copy(tab,content) {
 function task_exist(tab, new_task, notion_result) {
     for (const existing_task of notion_result) {
         if (existing_task.properties.Link.url) {
-            if(new_task["Link"]){
-                if (existing_task.properties.Link.url == new_task["Link"]) {
-                    return existing_task
-                }
-            } else {
-                if (existing_task.properties.Task.title.text.content == new_task["Task"]) {
-                    return existing_task
-                }
+            if (existing_task.properties.Link.url == new_task["Link"]) {
+                return existing_task
             }
+        } else if (
+            existing_task.properties.Task.title[0].plain_text == new_task["Task"] &&
+            existing_task.properties.Course.select.name == new_task["Course"]
+        ) {
+            return existing_task
         }
     }
     return null
 }
 
 function send_course_list() {
-    chrome.storage.local.set({ "course_list": course_list }, () => {
-        if (popup_open) {
-            chrome.runtime.sendMessage({ action: "update_course_status" }, (response) => {})
-        }
-    })
+    chrome.storage.local.set({ "course_list": course_list }, () => {/* debug */})
 }
 
 function send_notion_status() {
-    chrome.storage.local.set({ "notion_status": notion_status }, () => {
-        if (popup_open) {
-            chrome.runtime.sendMessage({ action: "update_notion_status" }, (response) => {})
-        }
-    })
+    chrome.storage.local.set({ "notion_status": notion_status }, () => {/* debug */})
 }
 
 async function fetch_D2L_data(tab) {
@@ -140,7 +129,6 @@ async function fetch_D2L_data(tab) {
                         action: "parse_Assignments",
                         payload: {
                             html_text: data,
-                            d2l_host_name: d2l_host_name,
                             course_name: course_item[0]
                         }
                     },
@@ -182,7 +170,6 @@ async function fetch_D2L_data(tab) {
                         action: "parse_Discussions",
                         payload: {
                             html_text: data,
-                            d2l_host_name: d2l_host_name,
                             course_name: course_item[0]
                         }
                     },
@@ -224,7 +211,6 @@ async function fetch_D2L_data(tab) {
                         action: "parse_Quiz",
                         payload: {
                             html_text: data,
-                            d2l_host_name: d2l_host_name,
                             course_name: course_item[0],
                             course_id: course_item[1]
                         }
@@ -267,7 +253,6 @@ async function fetch_D2L_data(tab) {
                     action: "parse_Content",
                     payload: {
                         html_text: html_text,
-                        d2l_host_name: d2l_host_name,
                         course_name: course_item[0]
                     }
                 },
@@ -278,6 +263,7 @@ async function fetch_D2L_data(tab) {
         }))
         host_log(tab, new_task)
     }
+
     //set course sync status to green
     for (const index in course_list) {
         course_list[index][3] = "green"
@@ -286,6 +272,8 @@ async function fetch_D2L_data(tab) {
     notion_status[1][1] = "Syncing course data - 0.0%"
     notion_status[1][3] = "blue"
     send_notion_status()
+    
+
     // add task_list to Notion
     for (const new_task of task_list) {
         let existing_task = task_exist(tab, new_task, notion_result)
@@ -350,9 +338,6 @@ async function fetch_D2L_data(tab) {
             })
         }
     }
-    //set notion sync status to green
-    // notion_status[1][3] = "green"
-    // send_notion_status()
 }
 
 async function fetchNotion(tab, next_cursor = "") {
@@ -390,13 +375,15 @@ function sync_data(tab) {
                 chrome.storage.local.get(["notion_settings_database"], (result) => {
                     database_id = result["notion_settings_database"] || "";
                     
-                    if (tab.url.includes("d2l.arizona.edu") && notion_status[1][3] != "orange") {
-                        try {
-                            fetch_D2L_data(tab);
-                        } catch (error) {
-                            host_log (tab, "crx error")
-                            notion_status[1][3] = "red"
-                            send_notion_status()
+                    if (tab.url.includes("d2l.arizona.edu")) {
+                        if (notion_status[1][3] != "orange") {
+                            try {
+                                fetch_D2L_data(tab);
+                            } catch (error) {
+                                host_log(tab, "crx fetch_D2L_data() error")
+                                notion_status[1][3] = "red"
+                                send_notion_status()
+                            }
                         }
                     }
                 })
@@ -411,17 +398,14 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         sync_data(tab)
     }
 })
-
 //Receive messages
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message.action === "add_course") {
         course_list.push(message.payload)
         send_course_list()
-        sendResponse()
     } else if (message.action === "delete_course") {
         course_list.splice(message.payload, 1)
         send_course_list()
-        sendResponse()
     } else if (message.action === "resync") {
         // Triggers when "From/To Notion Database" button clicked
         if (notion_status[1][3] == "green") {
@@ -429,9 +413,5 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 sync_data(tabs[0])
             })
         }
-        sendResponse()
-    } else if (message.action === "update_popup_status") {
-        popup_open = message.payload
-        sendResponse()
     }
 });

@@ -37,15 +37,15 @@ function load_course_list() {
         let trash_element = document.createElement("img")
 
         //set attributes
-        sync_img_element.setAttribute("src","sync_"+course_data[3]+".svg")
-        trash_element.setAttribute("src","trash.svg")
+        sync_img_element.setAttribute("src","icon/sync/sync_"+course_data[3]+".svg")
+        trash_element.setAttribute("src","icon/trash.svg")
 
         //addEventListener
-        trash_element.addEventListener("click", ((index,event)=>{
+        trash_element.addEventListener("click", ((index)=>{
             chrome.runtime.sendMessage({
                 action: "delete_course",
                 payload: index
-            }, () => {})
+            })
         }).bind(null, index), false)
 
         sync_element.addEventListener("click", ((index,event)=>{
@@ -144,7 +144,7 @@ async function load_current_tab() {
             chrome.runtime.sendMessage({
                 action: "add_course",
                 payload: [current_course_name,current_course_id,0,"blue"]
-            }, () => {})
+            })
         }
     } else {
         add_course_element.style.display = "none"
@@ -152,18 +152,12 @@ async function load_current_tab() {
 }
 
 function load_notion_status() {
-    chrome.storage.local.get(["notion_status"], (result) => {
-        notion_status = result["notion_status"] || [
-            ["From Notion Database", "Click to sync", 0, "green"],
-            ["To Notion Database", "Click to sync", 0, "green"]
-        ]
-        for (const index in notion_status) {
-            d2l_and_notion[index].firstElementChild.lastElementChild.innerHTML = notion_status[index][2]
-            d2l_and_notion[index].firstElementChild.firstElementChild.src = "sync_" + notion_status[index][3] + ".svg"
-            d2l_and_notion[index].children[1].lastElementChild.innerHTML = notion_status[index][0]
-            d2l_and_notion[index].children[1].lastElementChild.innerHTML = notion_status[index][1]
-        }
-    })
+    for (const index in notion_status) {
+        d2l_and_notion[index].firstElementChild.lastElementChild.innerHTML = notion_status[index][2]
+        d2l_and_notion[index].firstElementChild.firstElementChild.src = "icon/sync/sync_" + notion_status[index][3] + ".svg"
+        d2l_and_notion[index].children[1].lastElementChild.innerHTML = notion_status[index][0]
+        d2l_and_notion[index].children[1].lastElementChild.innerHTML = notion_status[index][1]
+    }
 }
 
 function jump_to_notion_page() {
@@ -201,10 +195,10 @@ document.getElementById("notion_settings_database").addEventListener("input", (e
 })
 //resync
 d2l_and_notion[0].children[1].addEventListener("click", () => {
-    chrome.runtime.sendMessage({action: "resync"}, () => {})
+    chrome.runtime.sendMessage({action: "resync"})
 })
 d2l_and_notion[1].children[1].addEventListener("click", () => {
-    chrome.runtime.sendMessage({action: "resync"}, () => {})
+    chrome.runtime.sendMessage({action: "resync"})
 })
 //jump to notion page
 d2l_and_notion[0].lastElementChild.addEventListener("click", jump_to_notion_page)
@@ -225,36 +219,30 @@ chrome.storage.local.get(["notion_settings_database"], (result) => {
 });
 
 
-//receiving message from background.js
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.action === "update_course_status") {
-        chrome.storage.local.get(["course_list"], (result) => {
-            course_list = result["course_list"] || [];
-            load_current_tab()
-        })
-        sendResponse()
-    } else if (message.action === "update_notion_status") {
-        load_notion_status()
-        sendResponse()
-    }
-});
-
 //init
 //load course list storage
 chrome.storage.local.get(["course_list"], (result) => {
     course_list = result["course_list"] || [];
     load_current_tab()
 });
-//load notion status
-load_notion_status()
-//get popup status
-chrome.runtime.sendMessage({
-    action: "update_popup_status",
-    payload: true
+chrome.storage.local.get(["notion_status"], (result) => {
+    notion_status = result["notion_status"] || [];
+    load_notion_status()
 });
-window.addEventListener("unload", () => {
-    chrome.runtime.sendMessage({
-        action: "update_popup_status",
-        payload: false
-    }, () => {});
+
+// When storage changes
+chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === "local") {
+        if (changes["course_list"]) {
+            course_list = changes["course_list"].newValue || [];
+            load_current_tab()
+        }
+        if (changes["notion_status"]) {
+            notion_status = changes["notion_status"].newValue || [
+                ["From Notion Database", "Click to sync", 0, "green"],
+                ["To Notion Database", "Click to sync", 0, "green"]
+            ]
+            load_notion_status()
+        }
+    }
 });
