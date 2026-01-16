@@ -383,16 +383,16 @@ Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notio
 
 **Colors**
 
-<a href="#"><img src="sync_green.svg" width="18"></a>
+<a href="#"><img src="icon/sync/sync_green.svg" width="18"></a>
  Completed
 
-<a href="#"><img src="sync_blue.svg" width="18"></a>
+<a href="#"><img src="icon/sync/sync_blue.svg" width="18"></a>
  In progress
 
-<a href="#"><img src="sync_orange.svg" width="18"></a>
+<a href="#"><img src="icon/sync/sync_orange.svg" width="18"></a>
  Waiting
 
-<a href="#"><img src="sync_red.svg" width="18"></a>
+<a href="#"><img src="icon/sync/sync_red.svg" width="18"></a>
  Error
 
 **Numbers**
@@ -419,7 +419,7 @@ The numbers refer to the numbers of tasks synced or processed
 
 **Quickly Open Database**
 
-👉 Click <a href="#"><img src="notion.png" width="18"></a> to the right of `From Notion Database` or `To Notion Databse`
+👉 Click <a href="#"><img src="logo/notion.png" width="18"></a> to the right of `From Notion Database` or `To Notion Databse`
 
 ### Notion Database
 Want to learn more about [Notion Database](https://www.notion.com/help/category/databases) to improve your efficiency and productivity? Visit [Intro to databases](https://www.notion.com/help/intro-to-databases)!
