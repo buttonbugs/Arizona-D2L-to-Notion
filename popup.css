@@ -65,7 +65,7 @@ input {
     /* height: 60px; */
     flex-direction: column;
 }
-#course_list_title {
+.course_list_title {
     font-size: 20px;
     height: 30px;
 }

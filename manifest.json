@@ -15,11 +15,18 @@
     },
     "content_scripts": [
         {
-            "matches": ["https://d2l.arizona.edu/*"],
+            "matches": [
+                "https://d2l.arizona.edu/*",
+                "https://learn.zybooks.com/*"
+            ],
             "js": ["./content_script.js"]
         }
     ],
-    "host_permissions": ["https://d2l.arizona.edu/*","https://api.notion.com/*"],
+    "host_permissions": [
+        "https://d2l.arizona.edu/*",
+        "https://api.notion.com/*",
+        "https://*.zybooks.com/*"
+    ],
     "permissions": [
         "activeTab",
         "tabs",

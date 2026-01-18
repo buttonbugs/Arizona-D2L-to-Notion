@@ -1,6 +1,7 @@
 const d2l_host_name = "https://d2l.arizona.edu" // DO NOT add "/" at the end
 const quiz_detail_url_p1 = "https://d2l.arizona.edu/d2l/lms/quizzing/user/quiz_summary.d2l?qi="
 const quiz_detail_url_p2 = "&ou="
+const check_error = false
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message.action == "parse_Assignments") {
         var task_list = []
@@ -19,12 +20,14 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                         let end_text = due_date_element_parent.text
                         if (end_text) {
                             try {
+                            // new Date() input: UTC, output: UTC (local time zone is treated as UTC here)
                                 due_date_string = new Date(end_text.split("Ends ")[1]).toISOString().split('T')[0]
                             } catch (error) {
                                 console.log(error);
                             }
                         } else {
                             let due_date_element = due_date_element_parent.firstChild
+                            // new Date() input: UTC, output: UTC (local time zone is treated as UTC here)
                             due_date_string = due_date_element? new Date(due_date_element.innerText.split(" ").slice(2,5).join(" ")).toISOString().split('T')[0] : null
                         }
                     }
@@ -37,14 +40,13 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                         "Type": null,
                         "Task": tr.getElementsByTagName("strong")[0].innerText
                     }
-                    if (!link_element) {
-                        console.log(new_task);
-                    }
                     task_list.push(new_task)
                 }
             });
         } catch (error) {
-            console.log(error);
+            if (check_error) {
+                console.log(error);
+            }
         }
         sendResponse(task_list);
     } else if (message.action == "parse_Discussions") {
@@ -66,7 +68,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 task_list.push(new_task)
             }
         } catch (error) {
-            console.log(error);
+            if (check_error) {
+                console.log(error);
+            }
         }
         sendResponse(task_list);
     } else if (message.action == "parse_Quiz") {
@@ -88,6 +92,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                     if (due_date_elements.length > 0) {
                         let due_date_original_text = due_date_elements[0].firstChild.textContent
                         if (due_date_original_text.indexOf("Due on ") > -1) {
+                            // new Date() input: UTC, output: UTC (local time zone is treated as UTC here)
                             due_date_string = new Date(due_date_original_text.split(" ").slice(2,5)).toISOString().split('T')[0]
                         }
                     }
@@ -103,7 +108,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 }
             }
         } catch (error) {
-            console.log(error);
+            if (check_error) {
+                console.log(error);
+            }
         }
         sendResponse(task_list);
     } else if (message.action == "parse_Content") {
@@ -134,7 +141,9 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 }
             }
         } catch (error) {
-            console.log(error);
+            if (check_error) {
+                console.log(error);
+            }
         }
         sendResponse(task_list);
     }

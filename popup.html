@@ -12,7 +12,7 @@
             <img src="logo/notion.png" alt="Notion" style="border-radius: 30%;">
         </div>
         <!-- Add Course -->
-        <div id="add_course" style="display: flex;">
+        <div id="add_course" style="display: none;">
             <div>Add this to your sync list?</div>
             <div class="course_list">
                 <div>
@@ -20,18 +20,23 @@
                         <img src="logo/arizona.png" style="width: 100%;">
                     </div>
                     <div style="cursor: default;">
-                        <div>ENGL 106</div>
-                        <div>D2L Course ID: 1661318</div>
+                        <div>N/A</div>
+                        <div>No course detected</div>
                     </div>
                     <img src="icon/plus.svg">
                 </div>
             </div>
         </div>
         <!-- Course List -->
-        <div id="course_list_title">
+        <div id="course_list_title" class="course_list_title">
             <div>D2L Sync List</div>
         </div>
         <div id="course_list" class="course_list"></div>
+        <!-- Course List -->
+        <div id="zybook_list_title" class="course_list_title">
+            <div>ZyBook Sync List</div>
+        </div>
+        <div id="zybook_list" class="course_list"></div>
         <!-- Notion Sync -->
         <div id="d2l_and_notion" style="display: flex;">
             <div>Notion API</div>
@@ -49,7 +54,7 @@
                 </div>
                 <div>
                     <div>
-                        <img src="sync_blue.svg">
+                        <img src="icon/sync/sync_blue.svg">
                         <span>0</span>
                     </div>
                     <div style="cursor: default;">
