@@ -393,7 +393,7 @@ Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notio
  Waiting
 
 <a href="#"><img src="icon/sync/sync_red.svg" width="18"></a>
- Error
+ Signed out / Error
 
 **Numbers**
 
