@@ -390,7 +390,7 @@ Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notio
  In progress
 
 <a href="#"><img src="icon/sync/sync_orange.svg" width="18"></a>
- Waiting
+ Pending
 
 <a href="#"><img src="icon/sync/sync_red.svg" width="18"></a>
  Signed out / Error
