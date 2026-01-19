@@ -119,16 +119,20 @@ input {
     font-size: 10px;
     color: gray;
 }
-.course_list > div > img {
+.course_list > div > img, .course_list > div > picture {
     margin: 3px 3px 3px 3px;
     height: 24px;
     filter: grayscale(1);
     transition: all 0.2s;
 }
-.course_list > div > img:hover {
+.course_list > div > img:hover, .course_list > div > picture:hover {
     margin: 0 0 0 0;
     height: 30px;
     filter: grayscale(0);
+}
+.course_list > div > picture > img {
+    max-height: 100%;
+    border-radius: 25%; cursor: pointer;
 }
 @media (prefers-color-scheme: dark) {
     html {
@@ -137,5 +141,11 @@ input {
     }
     input {
         color: white;
+    }
+    .course_list > div > img, #notion_settings_button {
+        filter: brightness(3) grayscale(1);
+    }
+    #notion_settings_button:hover {
+        filter: brightness(2) grayscale(0);
     }
 }

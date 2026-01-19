@@ -181,9 +181,9 @@ function set_badge(color = "#99B9EE") {
     Backgound color:
         - Default light:    #F2F2F2
         - Default dark:     #282828
-        - Preferred green:   #00FF88
-        - Preferred blue:    #99B9EE
-        - Preferred red:     #FF4488
+        - Preferred green:  #00FF88
+        - Preferred blue:   #99B9EE
+        - Preferred red:    #FF4488
      */
     chrome.action.setBadgeText({ text: badge_text });       // text = "" means no badge
     chrome.action.setBadgeBackgroundColor({color: color})   // color = "" will cause errors
@@ -198,7 +198,7 @@ async function fetch_couse_data(tab) {
     var next_cursor = ""
     var has_more = true
     
-    updateIcon("logo/notion.png")
+    updateIcon("logo/notion.png","logo/notion_dark.png")
     badge_text = " "
     set_badge()
 
@@ -492,7 +492,7 @@ async function fetch_couse_data(tab) {
     notion_status[1][1] = "Syncing course data - 0.0%"
     notion_status[1][3] = "blue"
     store_notion_status()
-    updateIcon("logo/notion.png")
+    updateIcon("logo/notion.png","logo/notion_dark.png")
     for (const new_task of task_list) {
         let existing_task = task_exist(tab, new_task, notion_result)
         if (existing_task) {
