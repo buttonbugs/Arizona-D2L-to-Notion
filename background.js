@@ -15,17 +15,23 @@ const zybook_course_url = "https://learn.zybooks.com/zybook/"
 const zybook_assignment_tag = "?selectedPanel=assignments-panel&assignment_id="     // The parameter assignment_id is just an identifier. It does not really exist
 const zybook_local_auth_key = "ember_simple_auth-session-5"
 
+// Pearson
+// https://session.physics-mastering.pearson.com/myct/mastering?action=getStdAssignmentData
+
 // notion url
 const notion_query_data_sourse_url_p1 = "https://api.notion.com/v1/data_sources/"
 const notion_query_data_sourse_url_p2 = "/query"
 const notion_create_page_url = `https://api.notion.com/v1/pages`
 const notion_update_page_url = `https://api.notion.com/v1/pages/`
 
-//notion api settings
+// notion api settings
 const notion_page_size = 100
 
 /* variable */
 // Status
+var badge_text = ""
+
+// Couse list
 var course_list = []
 var notion_status = [
     ["From Notion Database", "Loading ...", 0, "green"],
@@ -61,6 +67,18 @@ function host_copy(tab,content) {
     });
 }
 
+// Dark mode detection
+async function isDarkMode() {
+    const settings = await chrome.action.getUserSettings();
+    return settings.colorScheme === "dark";
+}
+
+// Calculate D2L fetch progress
+function d2l_progress(current_course_index) {
+    return (current_course_index * 1 + 1) % 2
+}
+
+/* Check if the new task exists in Notion database */
 function task_exist(tab, new_task, notion_result) {
     for (const existing_task of notion_result) {
         if (existing_task.properties.Link.url) {
@@ -95,6 +113,82 @@ function store_notion_status() {
     chrome.storage.local.set({ "notion_status": notion_status }, () => {/* debug */})
 }
 
+/* Sync to Notion User Interface Processing */
+function sync_to_notion_UI(task_list_length) {
+    const progress = notion_status[1][2] / task_list_length
+    notion_status[1][2] += 1
+    notion_status[1][1] = "Syncing course data - " + (progress * 100).toFixed(1) + "%"
+    if (notion_status[1][2] >= task_list_length) {
+        notion_status[1][1] = "Synced " + new Date().toLocaleString()
+        notion_status[1][3] = "green"
+        set_badge("#00FF88")
+        updateIcon()
+        setTimeout(async () => {
+            if (badge_text == "E") {
+                set_badge(await isDarkMode() ? "#282828" : "#F2F2F2")
+            } else {
+                badge_text = ""
+                set_badge()
+            }
+        }, 500);
+    }
+    store_notion_status()
+}
+
+/* Update popup icon using canvas*/
+
+async function updateIcon(file_name_light = "logo/arizona.png", file_name_dark = file_name_light) {
+    const dark = await isDarkMode();
+    const size = 32;
+    const line_height = 8;
+    const canvas = new OffscreenCanvas(size, size);
+    const ctx = canvas.getContext("2d");
+
+    console.log(file_name_light, file_name_dark)
+
+    if (file_name_light === "") {   // Draw a green check mark
+        //
+    } else {                        // Draw an icon and add a badge
+        
+    }
+    /* Insert image */
+    // chrome.runtime.getURL can turn path into chrome-extension://xxxxxxxxxxxxxxxxx/file_name
+    const response = await fetch(chrome.runtime.getURL(dark? file_name_dark : file_name_light));
+    const blob = await response.blob();
+    const bitmap = await createImageBitmap(blob);
+    
+    ctx.drawImage(bitmap, 0, 0, size, size);
+
+    // Get pixel data
+    const imageData = ctx.getImageData(0, 0, size, size);
+
+    chrome.action.setIcon({
+        imageData: {
+            32: imageData
+        }
+    });
+}
+
+function set_badge(color = "#99B9EE") {
+    // Display badge https://developer.chrome.com/docs/extensions/reference/api/action#:~:text=action.setBadgeText()
+    // check mark: ✓
+    /* 
+    Useful character:
+        - check mark:       ✓
+        - o:                o
+        - Rotate:           ↻
+        - Emoji:            🔄
+    Backgound color:
+        - Default light:    #F2F2F2
+        - Default dark:     #282828
+        - Preferred green:   #00FF88
+        - Preferred blue:    #99B9EE
+        - Preferred red:     #FF4488
+     */
+    chrome.action.setBadgeText({ text: badge_text });       // text = "" means no badge
+    chrome.action.setBadgeBackgroundColor({color: color})   // color = "" will cause errors
+}
+
 /* Fetch course data from D2L, zyBooks, etc. and sync them to Notion */
 async function fetch_couse_data(tab) {
     //fetch more than 100 result
@@ -103,6 +197,10 @@ async function fetch_couse_data(tab) {
     var notion_response = {}
     var next_cursor = ""
     var has_more = true
+    
+    updateIcon("logo/notion.png")
+    badge_text = " "
+    set_badge()
 
     //reset notion sync status
     notion_status = [
@@ -127,6 +225,8 @@ async function fetch_couse_data(tab) {
     notion_status[0][3] = "green"
     notion_status[1][1] = "Fetching course data ..."
     store_notion_status()
+    badge_text = " "
+    set_badge("#00FF88")
 
     /* Fetch course data from D2L webpage */
     // Reset course_list status
@@ -141,12 +241,17 @@ async function fetch_couse_data(tab) {
         zybook_list[index][3] = "orange"
     }
     store_zybook_list()
+    updateIcon()
+    set_badge()
 
     // Push Assignments
     for (const index in course_list) {
+        const course_item = course_list[index]
+
+        // User Interface
         course_list[index][3] = "blue"
         store_course_list()
-        const course_item = course_list[index]
+
         //Get Assignments webpage
         let response = await fetch(assignments_url + course_item[1],{
             method: "GET",
@@ -180,15 +285,20 @@ async function fetch_couse_data(tab) {
         } catch (error) {
             course_list[index][3] = "red"
             store_course_list()
+            badge_text = "E"
+            set_badge("")
             host_log(tab, "Parse Assignments webpage error")
         }
     }
     
     // Push Discussions
     for (const index in course_list) {
+        const course_item = course_list[index]
+
+        // User Interface
         course_list[index][3] = "blue"
         store_course_list()
-        const course_item = course_list[index]
+
         //Get Discussions webpage
         let response = await fetch(discussions_url_p1 + course_item[1] + discussions_url_p2,{
             method: "GET",
@@ -222,15 +332,20 @@ async function fetch_couse_data(tab) {
         } catch (error) {
             course_list[index][3] = "red"
             store_course_list()
+            badge_text = "E"
+            set_badge("#FF4488")
             host_log(tab, "Parse Discussions webpage error")
         }
     }
 
     // Push Quiz
     for (const index in course_list) {
+        const course_item = course_list[index]
+
+        // User Interface
         course_list[index][3] = "blue"
         store_course_list()
-        const course_item = course_list[index]
+
         //Get Quiz webpage
         let response = await fetch(quiz_url + course_item[1],{
             method: "GET",
@@ -265,6 +380,8 @@ async function fetch_couse_data(tab) {
         } catch (error) {
             course_list[index][3] = "red"
             store_course_list()
+            badge_text = "E"
+            set_badge("#FF4488")
             host_log(tab, "Parse Quiz webpage error")
         }
     }
@@ -307,9 +424,13 @@ async function fetch_couse_data(tab) {
     
     /* Fetch ZyBook Data */
     for (const index in zybook_list) {
-        zybook_list[index][3] = "blue"
-        store_zybook_list()  // temp -> send_zybook_list
         const zybook_item = zybook_list[index]
+
+        // User Interface
+        updateIcon("logo/zybooks.png")
+        zybook_list[index][3] = "blue"
+        store_zybook_list()
+
         //Get Assignments webpage
         let response = await fetch(zybook_assignment_p1 + zybook_item[1] + zybook_assignment_p2,{
             method: "GET",
@@ -357,6 +478,8 @@ async function fetch_couse_data(tab) {
             zybook_list[index][3] = "green"
         } else {
             zybook_list[index][3] = "red"
+            badge_text = "E"
+            set_badge("#FF4488")
         }
         store_zybook_list()
         host_log(tab,data);
@@ -369,6 +492,7 @@ async function fetch_couse_data(tab) {
     notion_status[1][1] = "Syncing course data - 0.0%"
     notion_status[1][3] = "blue"
     store_notion_status()
+    updateIcon("logo/notion.png")
     for (const new_task of task_list) {
         let existing_task = task_exist(tab, new_task, notion_result)
         if (existing_task) {
@@ -389,13 +513,7 @@ async function fetch_couse_data(tab) {
             })
             .then(response => {return response.json()})
             .then(data => {
-                notion_status[1][2] += 1
-                notion_status[1][1] = "Syncing course data - " + (notion_status[1][2]*100.0/task_list.length).toFixed(1) + "%"
-                if (notion_status[1][2] >= task_list.length) {
-                    notion_status[1][1] = "Synced " + new Date().toLocaleString()
-                    notion_status[1][3] = "green"
-                }
-                store_notion_status()
+                sync_to_notion_UI(task_list.length)
             })
         } else {
             let properties = {
@@ -422,13 +540,7 @@ async function fetch_couse_data(tab) {
             })
             .then(response => {return response.json()})
             .then(data => {
-                notion_status[1][2] += 1
-                notion_status[1][1] = "Syncing course data - " + (notion_status[1][2]*100.0/task_list.length).toFixed(1) + "%"
-                if (notion_status[1][2] >= task_list.length) {
-                    notion_status[1][1] = "Synced " + new Date().toLocaleString()
-                    notion_status[1][3] = "green"
-                }
-                store_notion_status()
+                sync_to_notion_UI(task_list.length)
             })
         }
     }
@@ -513,6 +625,8 @@ async function sync_data(tab) {
                 host_log(tab, "crx fetch_D2L_data() error")
                 notion_status[1][3] = "red"
                 store_notion_status()
+                badge_text = "E"
+                set_badge("#FF4488")
             }
         } else if (tab.url.includes("learn.zybooks.com")) {
             try {
@@ -521,6 +635,8 @@ async function sync_data(tab) {
                 host_log(tab, "crx zybook error")
                 notion_status[1][3] = "red"
                 store_notion_status()
+                badge_text = "E"
+                set_badge("#FF4488")
             }
         }
     }

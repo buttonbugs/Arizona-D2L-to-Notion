@@ -4,34 +4,20 @@ html{
     scrollbar-width: 0;
 }
 body {
-    min-width: 410px;
-    margin: 4px;
+    width: 800px;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
 }
 body > div {
     width: 400px;
     display: flex;
-    flex-direction: row;
-    margin: 5px auto;
+    flex-direction: column;
+    padding: 10px;
 }
 input {
     background: rgba(127, 127, 127, .2);
     border: 0;
-}
-.title {
-    height: 50px;
-    justify-content: center;
-}
-.title > img {
-    height: 100%;
-}
-.title > div {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 40px;
-}
-.title > div > strong {
-    margin-left: 10px;
 }
 .long {
     height: 28px;
@@ -52,7 +38,7 @@ input {
     float: right;
     padding: 0 6px;
 }
-.setting_parent {
+.settings_button_parent {
     margin: 0 0 0 auto;
     width: 30px;
     height: 30px;
@@ -68,6 +54,8 @@ input {
 .course_list_title {
     font-size: 20px;
     height: 30px;
+    display: flex;
+    flex-direction: row;
 }
 #d2l_and_notion {
     font-size: 20px;

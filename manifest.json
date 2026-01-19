@@ -10,7 +10,8 @@
         "128": "logo/arizona.png"
     },
     "action":{
-        "default_popup":"popup.html",
+        "default_icon" : "logo/arizona.png",
+        "default_popup": "popup.html",
         "default_title": "Arizona D2L to Notion"
     },
     "content_scripts": [
