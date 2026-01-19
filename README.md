@@ -1,3 +1,9 @@
+<!--
+Useful Links:
+- Github Markdown Emoji: https://gitmoji.dev/
+- Github Releases API: https://api.github.com/repos/{username}/{reponame}/releases
+-->
+
 # Arizona D2L to Notion
 
 [![Chrome Extension](https://img.shields.io/badge/crx-Chrome%20Extension-blue.svg)](https://developer.chrome.com/docs/extensions)
