@@ -415,7 +415,7 @@ The numbers refer to the numbers of tasks synced or processed
 
 **Resync**
 
-👉 Click `From Notion Database` or `To Notion Databse` to resync
+👉 Click `From Notion Database` or `To Notion Databse`
 
 **Quickly Open Database**
 
