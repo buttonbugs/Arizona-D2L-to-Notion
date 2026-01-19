@@ -15,6 +15,10 @@ const zybook_course_url = "https://learn.zybooks.com/zybook/"
 const zybook_assignment_tag = "?selectedPanel=assignments-panel&assignment_id="     // The parameter assignment_id is just an identifier. It does not really exist
 const zybook_local_auth_key = "ember_simple_auth-session-5"
 
+// Gradescope url
+const gradescope_course_url = "https://www.gradescope.com/courses/"
+const gradescope_assignment = "/assignments/"
+
 // Pearson
 // https://session.physics-mastering.pearson.com/myct/mastering?action=getStdAssignmentData
 
@@ -33,12 +37,14 @@ var badge_text = ""
 
 // Couse list
 var course_list = []
+var zybook_list = []
+var zybook_token = ""
+var gradescope_list = []
+
 var notion_status = [
     ["From Notion Database", "Loading ...", 0, "green"],
     ["To Notion Database", "Loading ...", 0, "green"]
 ]
-var zybook_list = []
-var zybook_token = ""
 
 // Notion
 var notion_token = ""

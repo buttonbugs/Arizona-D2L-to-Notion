@@ -15,6 +15,9 @@ const course_classlist_url = "https://d2l.arizona.edu/d2l/lms/classlist/classlis
 const zybook_host_name = "https://learn.zybooks.com/"
 const zybook_course_url = "https://learn.zybooks.com/zybook/"
 
+// Gradescope url
+const gradescope_course_url = "https://www.gradescope.com/courses/"
+
 let d2l_and_notion = document.getElementById("d2l_and_notion").lastElementChild.children
 
 var showing_notion_settings = false
@@ -24,18 +27,21 @@ var course_list = [
 var zybook_list = [
     ['Loading zyBooks list', 'loading ...', 0, 'blue']
 ]
+var gradescope_list = [
+    ['Loading Gradescope list', 'loading ...', 0, 'blue']
+]
 var notion_status = [
     ["From Notion Database", "Click to sync", 0, "green"],
     ["To Notion Database", "Click to sync", 0, "green"]
 ]
 
 /* rendering */
-function render_d2l_sync_list() {
+function render_sync_list(element_id, sync_list, course_list_title = "") {
     /* load course list from storage */
-    let course_list_element = document.getElementById("course_list")
+    let course_list_element = document.getElementById(element_id)
     course_list_element.innerHTML = ""
-    for (const index in course_list) {
-        let course_data = course_list[index];
+    for (const index in sync_list) {
+        let course_data = sync_list[index];
 
         //create elements
         let course_element = document.createElement("div")
@@ -54,79 +60,17 @@ function render_d2l_sync_list() {
         //addEventListener
         trash_element.addEventListener("click", ((index)=>{
             chrome.runtime.sendMessage({
-                action: "delete_course",
+                action: "delete_" + element_id.split("_")[0],
                 payload: index
             })
         }).bind(null, index), false)
 
         sync_element.addEventListener("click", ((index,event)=>{
-            window.open(course_home_url + course_list[index][1])
+            window.open(zybook_course_url + sync_list[index][1] + "?selectedPanel=assignments-panel")
         }).bind(null, index), false)
 
         detail_element.addEventListener("click", ((index,event)=>{
-            window.open(course_content_url + course_list[index][1] + "/Home")
-        }).bind(null, index), false)
-
-        //set content
-        sync_span_element.innerHTML = course_data[2]
-        detail_name_element.innerHTML = course_data[0]
-        detail_id_element.innerHTML = "D2L Course ID: "+course_data[1]
-
-        //append child
-        sync_element.appendChild(sync_img_element)
-        sync_element.appendChild(sync_span_element)
-
-        detail_element.appendChild(detail_name_element)
-        detail_element.appendChild(detail_id_element)
-        
-        course_element.appendChild(sync_element)
-        course_element.appendChild(detail_element)
-        course_element.appendChild(trash_element)
-
-        course_list_element.appendChild(course_element)
-    }
-    if (course_list.length == 0) {
-        document.getElementById("course_list_title").firstElementChild.innerHTML = "No course added to D2L sync list"
-    } else {
-        document.getElementById("course_list_title").firstElementChild.innerHTML = "D2L Sync List"
-    }
-}
-
-function render_zybook_sync_list() {
-    /* load course list from storage */
-    let course_list_element = document.getElementById("zybook_list")
-    course_list_element.innerHTML = ""
-    for (const index in zybook_list) {
-        let course_data = zybook_list[index];
-
-        //create elements
-        let course_element = document.createElement("div")
-        let sync_element = document.createElement("div")
-        let sync_img_element = document.createElement("img")
-        let sync_span_element = document.createElement("span")
-        let detail_element = document.createElement("div")
-        let detail_name_element = document.createElement("div")
-        let detail_id_element = document.createElement("div")
-        let trash_element = document.createElement("img")
-
-        //set attributes
-        sync_img_element.setAttribute("src","icon/sync/sync_"+course_data[3]+".svg")
-        trash_element.setAttribute("src","icon/trash.svg")
-
-        //addEventListener
-        trash_element.addEventListener("click", ((index)=>{
-            chrome.runtime.sendMessage({
-                action: "delete_zybook",
-                payload: index
-            })
-        }).bind(null, index), false)
-
-        sync_element.addEventListener("click", ((index,event)=>{
-            window.open(zybook_course_url + zybook_list[index][1] + "?selectedPanel=assignments-panel")
-        }).bind(null, index), false)
-
-        detail_element.addEventListener("click", ((index,event)=>{
-            window.open(zybook_course_url + zybook_list[index][1])
+            window.open(zybook_course_url + sync_list[index][1])
         }).bind(null, index), false)
 
         //set content
@@ -147,10 +91,18 @@ function render_zybook_sync_list() {
 
         course_list_element.appendChild(course_element)
     }
-    if (zybook_list.length == 0) {
-        document.getElementById("zybook_list_title").style.display = "none"
+    if (course_list_title) {
+        if (sync_list.length == 0) {
+            document.getElementById("course_list_title").firstElementChild.innerHTML = "No course added to " + course_list_title
+        } else {
+            document.getElementById("course_list_title").firstElementChild.innerHTML = course_list_title
+        }
     } else {
-        document.getElementById("zybook_list_title").style.display = ""
+        if (sync_list.length == 0) {
+            document.getElementById(element_id + "_title").style.display = "none"
+        } else {
+            document.getElementById(element_id + "_title").style.display = ""
+        }
     }
 }
 
@@ -197,8 +149,11 @@ async function get_zybook_name(tab) {
 
 async function load_current_tab_info() {
     //render d2l course list
-    render_d2l_sync_list()
-    render_zybook_sync_list()
+    // render_d2l_sync_list()
+    // render_zybook_sync_list()
+    render_sync_list("course_list", course_list, "D2L Sync List")
+    render_sync_list("zybook_list", zybook_list)
+    render_sync_list("gradescope_list", gradescope_list)
 
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     let url = tab.url
