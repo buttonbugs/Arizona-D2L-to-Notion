@@ -8,13 +8,13 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         let parser = new DOMParser();
         let doc = parser.parseFromString(message.payload.html_text, "text/html");
         try {
-            let tr_elements = doc.getElementById("z_a").firstChild.childNodes
+            let tr_elements = doc.getElementById("z_a").firstChild.children
 
             tr_elements.forEach(tr => {
 
                 if (tr.className == "" || tr.className == "d2l-table-row-last") {
                     var due_date_string = null
-                    let d2l_dates_text_element = tr.firstChild.childNodes[3].firstChild.firstChild
+                    let d2l_dates_text_element = tr.firstChild.children[3].firstChild.firstChild
                     if (d2l_dates_text_element) {
                         let due_date_element_parent = d2l_dates_text_element.firstChild.firstChild
                         let end_text = due_date_element_parent.text
@@ -34,7 +34,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                     let link_element = tr.getElementsByClassName("d2l-link-inline")[0]
                     let new_task = {
                         "Link": link_element ? (d2l_host_name + link_element.getAttribute("href")) : null,
-                        "Status": tr.childNodes[1].firstChild.innerText.indexOf("Submission") > -1 ? "Done" : null,
+                        "Status": tr.children[1].firstChild.innerText.indexOf("Submission") > -1 ? "Done" : null,
                         "Course": message.payload.course_name,
                         "Due Date": due_date_string,
                         "Type": null,
@@ -78,8 +78,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         let parser = new DOMParser();
         let doc = parser.parseFromString(message.payload.html_text, "text/html");
         try {
-            let tr_elements = doc.getElementById("z_b").firstChild.childNodes
-            console.log(message.payload.course_name);
+            let tr_elements = doc.getElementById("z_b").firstChild.children
             for (const tr of tr_elements) {
                 if (tr.className == "" || tr.className == "d2l-table-row-last") {
                     //get link
@@ -98,7 +97,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                     }
                     let new_task = {
                         "Link": link,
-                        "Status": tr.lastChild.childNodes[1].className == "di_s" ? "In progress" : (tr.lastChild.firstChild.innerText * 1 > 0 ? "Done" : null),
+                        "Status": tr.lastChild.children[1].className == "di_s" ? "In progress" : (tr.lastChild.firstChild.innerText * 1 > 0 ? "Done" : null),
                         "Course": message.payload.course_name,
                         "Due Date": due_date_string,
                         "Type": null,
@@ -139,6 +138,30 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                         }
                     }
                 }
+            }
+        } catch (error) {
+            if (check_error) {
+                console.log(error);
+            }
+        }
+        sendResponse(task_list);
+    } else if (message.action == "parse_Gradescope") {
+        var task_list = []
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(message.payload.html_text, "text/html");
+        try {
+            let tr_elements = doc.getElementById("assignments-student-table").lastElementChild.children
+            for (const tr of tr_elements) {
+                console.log(tr);
+                    let new_task = {
+                        "Link": null,
+                        "Status": null,
+                        "Course": message.payload.course_name,
+                        "Due Date": null,
+                        "Type": null,
+                        "Task": null
+                    }
+                    task_list.push(new_task)
             }
         } catch (error) {
             if (check_error) {

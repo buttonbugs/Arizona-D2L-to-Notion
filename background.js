@@ -115,6 +115,10 @@ function store_zybook_token() {
     chrome.storage.local.set({ "zybook_token": zybook_token }, () => {/* debug */})
 }
 
+function store_gradescope_list() {
+    chrome.storage.local.set({ "gradescope_list": gradescope_list }, () => {/* debug */})
+}
+
 function store_notion_status() {
     chrome.storage.local.set({ "notion_status": notion_status }, () => {/* debug */})
 }
@@ -246,7 +250,14 @@ async function fetch_couse_data(tab) {
         zybook_list[index][2] = 0
         zybook_list[index][3] = "orange"
     }
+
+    // Reset gradescope_list status
+    for (const index in gradescope_list) {
+        gradescope_list[index][2] = 0
+        gradescope_list[index][3] = "orange"
+    }
     store_zybook_list()
+    store_gradescope_list()
     updateIcon()
     set_badge()
 
@@ -488,11 +499,58 @@ async function fetch_couse_data(tab) {
             set_badge("#FF4488")
         }
         store_zybook_list()
-        host_log(tab,data);
     }
     store_zybook_list()
 
-    // host_log(tab,task_list);
+    /* Fetch Gradescope Data */
+    for (const index in gradescope_list) {
+        const gradescope_item = gradescope_list[index]
+
+        // User Interface
+        updateIcon("logo/gradescope.png")
+        gradescope_list[index][3] = "blue"
+        store_gradescope_list()
+
+        //Get Gradescope webpage
+        let response = await fetch(gradescope_course_url + gradescope_item[1], {
+            method: "GET",
+            credentials: "include"
+        })
+        let data = await response.text();
+        
+        //Parse Gradescope webpage
+        try {
+            host_log(tab, await new Promise((resolve) => {
+                chrome.tabs.sendMessage(
+                    tab.id,
+                    {
+                        action: "parse_Gradescope",
+                        payload: {
+                            html_text: data,
+                            course_name: gradescope_item[0],
+                            course_id: gradescope_item[1]
+                        }
+                    },
+                    function(task_list) {
+                        if (task_list) {
+                            gradescope_list[index][2] += task_list.length
+                            gradescope_list[index][3] = "green"
+                            store_gradescope_list()
+                            resolve(task_list);
+                        } else {
+                            resolve([]);
+                        }
+                    }
+                )
+            }))
+        } catch (error) {
+            gradescope_list[index][3] = "red"
+            store_gradescope_list()
+            badge_text = "E"
+            set_badge("#FF4488")
+            host_log(tab, "Parse Quiz webpage error")
+        }
+    }
 
     /* Add task_list to Notion */
     notion_status[1][1] = "Syncing course data - 0.0%"
@@ -605,7 +663,8 @@ async function get_zybook_auth(tab) {
     fetch_couse_data(tab);
 }
 
-async function sync_data(tab) {
+/* Assign values to the variables according to the Local Storage */
+async function load_storage() {
     /* Get data from Local Storage (Data preview: Sevice Worker Inspect -> Application -> Storage -> Extension Storage -> Local) */
     const storage_data = await chrome.storage.local.get(null)
     /* 
@@ -618,32 +677,32 @@ async function sync_data(tab) {
     course_list = storage_data["course_list"] || [];
     zybook_list = storage_data["zybook_list"] || [];
     zybook_token = storage_data["zybook_token"] || "";
+    gradescope_list = storage_data["gradescope_list"] || [];
     notion_token = storage_data["notion_settings_token"] || "";
     data_source_id = storage_data["notion_settings_data_sourse"] || "";
     database_id = storage_data["notion_settings_database"] || "";
+}
+
+/* Triggers when webpage loads or when "From/To Notion Database" is clicked */
+async function sync_data(tab) {
+    await load_storage()
 
     /* Start fetching data */
     if (notion_status[1][3] != "orange") {
-        if (tab.url.includes("d2l.arizona.edu")) {
-            try {
+        try {
+            if (tab.url.includes("d2l.arizona.edu")) {
                 fetch_couse_data(tab);
-            } catch (error) {
-                host_log(tab, "crx fetch_D2L_data() error")
-                notion_status[1][3] = "red"
-                store_notion_status()
-                badge_text = "E"
-                set_badge("#FF4488")
-            }
-        } else if (tab.url.includes("learn.zybooks.com")) {
-            try {
+            } else if (tab.url.includes(zybook_course_url)) {
                 get_zybook_auth(tab);
-            } catch (error) {
-                host_log(tab, "crx zybook error")
-                notion_status[1][3] = "red"
-                store_notion_status()
-                badge_text = "E"
-                set_badge("#FF4488")
+            } else if (tab.url.includes(gradescope_course_url)) {
+                fetch_couse_data(tab);
             }
+        } catch (error) {
+            host_log(tab, "crx error")
+            notion_status[1][3] = "red"
+            store_notion_status()
+            badge_text = "E"
+            set_badge("#FF4488")
         }
     }
 }
@@ -658,19 +717,31 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
 //Receive messages
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    if (message.action === "add_course") {              // D2L
+    if (message.action === "add_course") {                  // D2L
         course_list.push(message.payload)
         store_course_list()
+
     } else if (message.action === "delete_course") {
         course_list.splice(message.payload, 1)
         store_course_list()
-    } else if (message.action === "add_zybook") {       // zybook
+
+    } else if (message.action === "add_zybook") {           // zybook
         zybook_list.push(message.payload)
         store_zybook_list()
+
     } else if (message.action === "delete_zybook") {
         zybook_list.splice(message.payload, 1)
         store_zybook_list()
-    } else if (message.action === "resync") {           // resync
+
+    } else if (message.action === "add_gradescope") {       // gradescope
+        gradescope_list.push(message.payload)
+        store_gradescope_list()
+
+    } else if (message.action === "delete_gradescope") {
+        gradescope_list.splice(message.payload, 1)
+        store_gradescope_list()
+        
+    } else if (message.action === "resync") {               // resync
         // Triggers when "From/To Notion Database" button clicked
         if (notion_status[1][3] == "green") {
             chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {
@@ -679,3 +750,5 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         }
     }
 });
+
+load_storage()

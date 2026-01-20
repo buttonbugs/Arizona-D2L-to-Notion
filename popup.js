@@ -16,6 +16,7 @@ const zybook_host_name = "https://learn.zybooks.com/"
 const zybook_course_url = "https://learn.zybooks.com/zybook/"
 
 // Gradescope url
+const gradescope_host_name = "https://www.gradescope.com/"
 const gradescope_course_url = "https://www.gradescope.com/courses/"
 
 let d2l_and_notion = document.getElementById("d2l_and_notion").lastElementChild.children
@@ -35,8 +36,16 @@ var notion_status = [
     ["To Notion Database", "Click to sync", 0, "green"]
 ]
 
-/* rendering */
-function render_sync_list(element_id, sync_list, course_list_title = "") {
+/**
+ * Course list rendering
+ * @param {String} element_id           e.g. `"course_list"`
+ * @param {Array} sync_list             e.g. `course_list`
+ * @param {String} subtitle           e.g. `"D2L Course ID"`
+ * @param {Function} sync_onclick        e.g. `((index) => { ... })`
+ * @param {Function} detail_onclick     e.g. `((index) => { ... })`
+ * @param {String} course_list_title    e.g. `"D2L Sync List"`
+ */
+function render_sync_list(element_id, sync_list, subtitle, sync_onclick, detail_onclick) {
     /* load course list from storage */
     let course_list_element = document.getElementById(element_id)
     course_list_element.innerHTML = ""
@@ -65,18 +74,13 @@ function render_sync_list(element_id, sync_list, course_list_title = "") {
             })
         }).bind(null, index), false)
 
-        sync_element.addEventListener("click", ((index,event)=>{
-            window.open(zybook_course_url + sync_list[index][1] + "?selectedPanel=assignments-panel")
-        }).bind(null, index), false)
-
-        detail_element.addEventListener("click", ((index,event)=>{
-            window.open(zybook_course_url + sync_list[index][1])
-        }).bind(null, index), false)
+        sync_element.addEventListener("click", sync_onclick.bind(null, sync_list[index][1]), false)
+        detail_element.addEventListener("click", detail_onclick.bind(null, sync_list[index][1]), false)
 
         //set content
         sync_span_element.innerHTML = course_data[2]
         detail_name_element.innerHTML = course_data[0]
-        detail_id_element.innerHTML = "zyBook code: "+course_data[1]
+        detail_id_element.innerHTML = subtitle + ": " + course_data[1]
 
         //append child
         sync_element.appendChild(sync_img_element)
@@ -91,11 +95,11 @@ function render_sync_list(element_id, sync_list, course_list_title = "") {
 
         course_list_element.appendChild(course_element)
     }
-    if (course_list_title) {
+    if (element_id == "course_list") {
         if (sync_list.length == 0) {
-            document.getElementById("course_list_title").firstElementChild.innerHTML = "No course added to " + course_list_title
+            document.getElementById(element_id + "_title").firstElementChild.innerHTML = "No course added to D2L sync list"
         } else {
-            document.getElementById("course_list_title").firstElementChild.innerHTML = course_list_title
+            document.getElementById(element_id + "_title").firstElementChild.innerHTML = "D2L Sync List"
         }
     } else {
         if (sync_list.length == 0) {
@@ -132,6 +136,7 @@ async function get_course_name(tab) {
     return result
 }
 
+// Get course name from webpage
 async function get_zybook_name(tab) {
     const [{ result }] = await chrome.scripting.executeScript({
         target: { tabId: tab.id },
@@ -147,13 +152,48 @@ async function get_zybook_name(tab) {
     return result
 }
 
+async function get_gradescope_name(tab) {
+    const [{ result }] = await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: () => {
+            try {
+                let course_full_name = document.getElementsByClassName("sidebar--title sidebar--title-course")[0].firstElementChild.innerHTML.split(" ")
+                return course_full_name[0] + " " + course_full_name[1]
+            } catch (error) {
+                return ""
+            }
+        }
+    })
+    return result
+}
+
 async function load_current_tab_info() {
     //render d2l course list
-    // render_d2l_sync_list()
-    // render_zybook_sync_list()
-    render_sync_list("course_list", course_list, "D2L Sync List")
-    render_sync_list("zybook_list", zybook_list)
-    render_sync_list("gradescope_list", gradescope_list)
+    render_sync_list("course_list", course_list, "D2L Course ID",
+        ((course_id)=>{
+            window.open(course_home_url + course_id)
+        }),
+        ((course_id)=>{
+            window.open(course_content_url + course_id + "/Home")
+        }),
+        "D2L Sync List"
+    )
+    render_sync_list("zybook_list", zybook_list, "zyBook code",
+        ((course_id)=>{
+            window.open(zybook_course_url + course_id + zybook_assignment_tag)
+        }),
+        ((course_id)=>{
+            window.open(zybook_course_url + course_id)
+        })
+    )
+    render_sync_list("gradescope_list", gradescope_list, "Gradescope Course ID",
+        ((course_id)=>{
+            window.open(gradescope_course_url + course_id)
+        }),
+        ((course_id)=>{
+            window.open(gradescope_course_url + course_id)
+        })
+    )
 
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     let url = tab.url
@@ -162,6 +202,7 @@ async function load_current_tab_info() {
     var current_course_name = ""
     var logo = "logo/arizona.png"
 
+    // get course id and course name from url
     if (compare_url(d2l_host_name,url)) {
         logo = "logo/arizona.png"
         if (compare_url(course_home_url,url)) {
@@ -192,7 +233,18 @@ async function load_current_tab_info() {
             current_course_id = url.split("?")[0].split("/")[4]
             current_course_name = await get_zybook_name(tab)
         }
+    } else if (compare_url(gradescope_host_name,url)) {
+        logo = "logo/gradescope.png"
+        if (compare_url(gradescope_course_url,url)) {
+            current_course_id = url.split("?")[0].split("/")[4]
+            current_course_name = await get_gradescope_name(tab)
+        }
     }
+
+    // Convert course name to upper case, especially in Gradescope
+    current_course_name = current_course_name.toUpperCase()
+    
+    // check if the course id and the course name are available
     if (current_course_id != "" && current_course_name != "") {
         // course logo
         let add_course_logo_element = add_course_element.lastElementChild.firstElementChild.firstElementChild.firstElementChild
@@ -202,8 +254,8 @@ async function load_current_tab_info() {
         let add_course_detail_element = add_course_element.lastElementChild.firstElementChild.children[1]
         add_course_detail_element.firstElementChild.innerHTML = current_course_name
 
+        // check which websites it belongs to and whether the course already exists in the course lists
         if (logo == "logo/arizona.png" && get_course_index(current_course_id, course_list) == -1) {
-            // Show "Add this to your sync list?"
 
             add_course_detail_element.lastElementChild.innerHTML = "D2L Course ID: " + current_course_id
             add_course_element.lastElementChild.firstElementChild.lastElementChild.onclick = () => {
@@ -215,7 +267,6 @@ async function load_current_tab_info() {
             
             add_course_element.style.display = "flex"
         } else if (logo == "logo/zybooks.png" && get_course_index(current_course_id, zybook_list) == -1) {
-            // Show "Add this to your sync list?"
 
             add_course_detail_element.lastElementChild.innerHTML = "zyBooks code: " + current_course_id
             add_course_element.lastElementChild.firstElementChild.lastElementChild.onclick = () => {
@@ -226,10 +277,24 @@ async function load_current_tab_info() {
             }
             
             add_course_element.style.display = "flex"
+        } else if (logo == "logo/gradescope.png" && get_course_index(current_course_id, gradescope_list) == -1) {
+
+            add_course_detail_element.lastElementChild.innerHTML = "Gradescope Course ID: " + current_course_id
+            add_course_element.lastElementChild.firstElementChild.lastElementChild.onclick = () => {
+                chrome.runtime.sendMessage({
+                    action: "add_gradescope",
+                    payload: [current_course_name,current_course_id,0,"blue"]
+                })
+            }
+            
+            // Show "Add this to your sync list?"
+            add_course_element.style.display = "flex"
         } else {
+            // Hide "Add this to your sync list?"
             add_course_element.style.display = "none"
         }
     } else {
+        // Hide "Add this to your sync list?"
         add_course_element.style.display = "none"
     }
 }
@@ -287,9 +352,6 @@ d2l_and_notion[1].children[1].addEventListener("click", () => {
 d2l_and_notion[0].lastElementChild.addEventListener("click", jump_to_notion_page)
 d2l_and_notion[1].lastElementChild.addEventListener("click", jump_to_notion_page)
 
-//Check if current webpage is course home
-// document.addEventListener("DOMContentLoaded", load_current_tab_info);
-
 //load notion settings storage
 chrome.storage.local.get(["notion_settings_token"], (result) => {
     document.getElementById("notion_settings_token").value = result["notion_settings_token"] || "";
@@ -310,9 +372,10 @@ chrome.storage.local.get(["notion_status"], (result) => {
 
 // get course list
 (async () => {
-    const result = await chrome.storage.local.get(["course_list","zybook_list"]);
+    const result = await chrome.storage.local.get(["course_list","zybook_list","gradescope_list"]);
     course_list = result["course_list"] || [];
     zybook_list = result["zybook_list"] || [];
+    gradescope_list = result["gradescope_list"] || [];
 
     load_current_tab_info()
     
@@ -325,6 +388,10 @@ chrome.storage.local.get(["notion_status"], (result) => {
             }
             if (changes["zybook_list"]) {
                 zybook_list = changes["zybook_list"].newValue || [];
+                load_current_tab_info()
+            }
+            if (changes["gradescope_list"]) {
+                gradescope_list = changes["gradescope_list"].newValue || [];
                 load_current_tab_info()
             }
             if (changes["notion_status"]) {
