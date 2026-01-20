@@ -11,7 +11,8 @@ Useful Links:
 [![Version](https://img.shields.io/github/v/tag/buttonbugs/Arizona-D2L-to-Notion)](https://github.com/buttonbugs/D2L-Darkspace/releases)
 [![Notion API](https://img.shields.io/badge/Notion%20API-2025--09--03-blue.svg)](https://developers.notion.com/)
 
-Arizona D2L to Notion is a chrome extension that can sync your [Arizona D2L Brightspace](https://d2l.arizona.edu/d2l/home) course data (assignments, quizzes, exams, and submission status) into a [Notion database](https://www.notion.com/help/intro-to-databases).
+Arizona D2L to Notion is a chrome extension that can sync your [Arizona D2L](https://d2l.arizona.edu/d2l/home), [zyBooks](https://www.zybooks.com/), and [Gradescope](https://www.gradescope.com/) course data (assignments, quizzes, exams, and submission status) into a [Notion database](https://www.notion.com/help/intro-to-databases).
+
 ## Preview
 ### Table View
 View what to do as a [list](https://www.notion.com/help/tables) of tasks
@@ -387,7 +388,7 @@ Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notio
 
 ### Understand Visual Elements
 
-**Colors**
+**Colors of Sync Icon**
 
 <a href="#"><img src="icon/sync/sync_green.svg" width="18"></a>
  Completed
@@ -399,11 +400,13 @@ Once [the above steps](#before-you-use) are completed, the `Arizona D2L to Notio
  Pending
 
 <a href="#"><img src="icon/sync/sync_red.svg" width="18"></a>
- Signed out / Error
+ Logged out / Error
 
 **Numbers**
 
 The numbers refer to the numbers of tasks synced or processed
+
+<a href="#"><img src="icon/sync/sync_green.svg" width="16"></a> with `0` inside might indicate that you've logged out.
 
 ### Functions
 
