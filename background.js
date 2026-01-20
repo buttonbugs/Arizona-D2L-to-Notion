@@ -17,7 +17,6 @@ const zybook_local_auth_key = "ember_simple_auth-session-5"
 
 // Gradescope url
 const gradescope_course_url = "https://www.gradescope.com/courses/"
-const gradescope_assignment = "/assignments/"
 
 // Pearson
 // https://session.physics-mastering.pearson.com/myct/mastering?action=getStdAssignmentData
@@ -520,7 +519,7 @@ async function fetch_couse_data(tab) {
         
         //Parse Gradescope webpage
         try {
-            host_log(tab, await new Promise((resolve) => {
+            task_list.push(...await new Promise((resolve) => {
                 chrome.tabs.sendMessage(
                     tab.id,
                     {

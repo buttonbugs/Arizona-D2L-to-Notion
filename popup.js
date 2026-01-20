@@ -16,7 +16,7 @@ const zybook_host_name = "https://learn.zybooks.com/"
 const zybook_course_url = "https://learn.zybooks.com/zybook/"
 
 // Gradescope url
-const gradescope_host_name = "https://www.gradescope.com/"
+const gradescope_host_name = "https://www.gradescope.com"
 const gradescope_course_url = "https://www.gradescope.com/courses/"
 
 let d2l_and_notion = document.getElementById("d2l_and_notion").lastElementChild.children

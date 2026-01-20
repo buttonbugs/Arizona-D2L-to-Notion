@@ -1,6 +1,14 @@
-const d2l_host_name = "https://d2l.arizona.edu" // DO NOT add "/" at the end
+// D2L
+const d2l_host_name = "https://d2l.arizona.edu"                             // DO NOT add "/" at the end
 const quiz_detail_url_p1 = "https://d2l.arizona.edu/d2l/lms/quizzing/user/quiz_summary.d2l?qi="
 const quiz_detail_url_p2 = "&ou="
+
+// Gradescope
+const gradescope_host_name = "https://www.gradescope.com"                   // DO NOT add "/" at the end
+const gradescope_course_url = "https://www.gradescope.com/courses/"
+const gradescope_assignment = "/assignments/"
+
+// Debug
 const check_error = false
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message.action == "parse_Assignments") {
@@ -10,7 +18,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         try {
             let tr_elements = doc.getElementById("z_a").firstChild.children
 
-            tr_elements.forEach(tr => {
+            for (const tr of tr_elements) {
 
                 if (tr.className == "" || tr.className == "d2l-table-row-last") {
                     var due_date_string = null
@@ -34,7 +42,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                     let link_element = tr.getElementsByClassName("d2l-link-inline")[0]
                     let new_task = {
                         "Link": link_element ? (d2l_host_name + link_element.getAttribute("href")) : null,
-                        "Status": tr.children[1].firstChild.innerText.indexOf("Submission") > -1 ? "Done" : null,
+                        "Status": tr.childNodes[1].firstChild.innerText.indexOf("Submission") > -1 ? "Done" : null,
                         "Course": message.payload.course_name,
                         "Due Date": due_date_string,
                         "Type": null,
@@ -42,7 +50,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                     }
                     task_list.push(new_task)
                 }
-            });
+            }
         } catch (error) {
             if (check_error) {
                 console.log(error);
@@ -78,7 +86,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         let parser = new DOMParser();
         let doc = parser.parseFromString(message.payload.html_text, "text/html");
         try {
-            let tr_elements = doc.getElementById("z_b").firstChild.children
+            let tr_elements = doc.getElementById("z_b").firstChild.childNodes
             for (const tr of tr_elements) {
                 if (tr.className == "" || tr.className == "d2l-table-row-last") {
                     //get link
@@ -97,7 +105,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                     }
                     let new_task = {
                         "Link": link,
-                        "Status": tr.lastChild.children[1].className == "di_s" ? "In progress" : (tr.lastChild.firstChild.innerText * 1 > 0 ? "Done" : null),
+                        "Status": tr.lastChild.childNodes[1].className == "di_s" ? "In progress" : (tr.lastChild.firstChild.innerText * 1 > 0 ? "Done" : null),
                         "Course": message.payload.course_name,
                         "Due Date": due_date_string,
                         "Type": null,
@@ -129,7 +137,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                     let link = null
                     let due_date = null
                     if (task_name_element.className == "d2l-link") {
-                        link = task_name_element.href
+                        link = task_name_element.getAttribute("href")
                     }
                     if (due_date_div.className == "d2l-placeholder d2l-placeholder-live") {
                         let due_date_span = due_date_div.getElementsByClassName("d2l-textblock")[0]
@@ -152,16 +160,28 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
         try {
             let tr_elements = doc.getElementById("assignments-student-table").lastElementChild.children
             for (const tr of tr_elements) {
-                console.log(tr);
-                    let new_task = {
-                        "Link": null,
-                        "Status": null,
-                        "Course": message.payload.course_name,
-                        "Due Date": null,
-                        "Type": null,
-                        "Task": null
-                    }
-                    task_list.push(new_task)
+                // Task name
+                let task_name_element = tr.getElementsByClassName("table--primaryLink")[0].firstElementChild
+                let link = null
+                if (task_name_element.getAttribute("href")) {
+                    link = gradescope_host_name + task_name_element.getAttribute("href").split("/").slice(0,5).join("/")       // Convert to assignment link
+                } else {
+                    link = gradescope_host_name + task_name_element.getAttribute("data-post-url").split("/").slice(0,5).join("/")       // Convert to assignment link
+                }
+
+                // Get due date
+                let due_date_element_text = tr.lastElementChild.innerHTML
+                // Due Date - caution new Date() input: given time zone, output: local time zone
+                let due_date_string = due_date_element_text ? new Date(due_date_element_text).toLocaleDateString('sv-SE') : null
+                let new_task = {
+                    "Link": link,
+                    "Status": tr.getElementsByClassName("submissionStatus")[0].className.includes("submissionStatus-complete") ? "Done" : null,
+                    "Course": message.payload.course_name,
+                    "Due Date": due_date_string,
+                    "Type": null,
+                    "Task": task_name_element.innerHTML
+                }
+                task_list.push(new_task)
             }
         } catch (error) {
             if (check_error) {
