@@ -428,7 +428,7 @@ The numbers refer to the numbers of tasks synced or processed
 
 **Quickly Open Database**
 
-👉 Click <a href="#"><img src="logo/notion.png" width="18"></a> to the right of `From Notion Database` or `To Notion Databse`
+👉 Click <a href="#"><img src="logo/notion.png" width="18"></a> to the right of `From Notion Database` or `To Notion Database`
 
 ### Notion Database
 Want to learn more about [Notion Database](https://www.notion.com/help/category/databases) to improve your efficiency and productivity? Visit [Intro to databases](https://www.notion.com/help/intro-to-databases)!
@@ -456,6 +456,11 @@ Want to learn more about [Notion Database](https://www.notion.com/help/category/
 - Change link to a task if it the task has a link in D2L
 - Change properties existing in [the template](https://buttonbugs.notion.site/2a2c1a64f0d880229eebcd11f4365956?v=2a2c1a64f0d881d7b367000cb9f4b112)
 - Refresh the [Internal Integration Secret](https://developers.notion.com/docs/create-a-notion-integration#get-your-api-secret) (If you did refresh it, please [copy the Notion API Token again](#2-copy-notion-api-token-to-the-extension))
+
+## Notes
+
+- The links in the D2L `content` tab that belong to neither assignments nor quizzes nor discussions will not be synced to Notion Database
+- The tasks removed by instructors will not be removed in Notion Database in order to protect your personal tasks from being removed, but you can remove those tasks manually in Notion Database by right-clicking the checkbox on the left of the tasks
 
 # Disclaimer
 ## Use it at your own risk
