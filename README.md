@@ -459,7 +459,7 @@ Want to learn more about [Notion Database](https://www.notion.com/help/category/
 
 ## Notes
 
-- The links in the D2L `content` tab that belong to neither assignments nor quizzes nor discussions will not be synced to Notion Database
+- The links in the D2L `content` tab that belong to neither assignments nor quizzes nor discussions (e.g. a link to a Google Docs) will not be synced to Notion Database
 - The tasks removed by instructors will not be removed in Notion Database in order to protect your personal tasks from being removed, but you can remove those tasks manually in Notion Database by right-clicking the checkbox on the left of the tasks
 
 # Disclaimer
