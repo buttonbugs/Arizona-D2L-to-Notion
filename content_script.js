@@ -1,3 +1,4 @@
+/* URLs */
 // D2L
 const d2l_host_name = "https://d2l.arizona.edu"                             // DO NOT add "/" at the end
 const quiz_detail_url_p1 = "https://d2l.arizona.edu/d2l/lms/quizzing/user/quiz_summary.d2l?qi="
@@ -8,8 +9,11 @@ const gradescope_host_name = "https://www.gradescope.com"                   // D
 const gradescope_course_url = "https://www.gradescope.com/courses/"
 const gradescope_assignment = "/assignments/"
 
-// Debug
-const check_error = false
+/* Debug Mode */
+var debug_mode = false
+// var debug_mode = true
+
+/* Message Listener */
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message.action == "parse_Assignments") {
         var task_list = []
@@ -52,7 +56,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 }
             }
         } catch (error) {
-            if (check_error) {
+            if (debug_mode) {
                 console.log(error);
             }
         }
@@ -76,7 +80,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 task_list.push(new_task)
             }
         } catch (error) {
-            if (check_error) {
+            if (debug_mode) {
                 console.log(error);
             }
         }
@@ -115,7 +119,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 }
             }
         } catch (error) {
-            if (check_error) {
+            if (debug_mode) {
                 console.log(error);
             }
         }
@@ -148,7 +152,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 }
             }
         } catch (error) {
-            if (check_error) {
+            if (debug_mode) {
                 console.log(error);
             }
         }
@@ -184,10 +188,25 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
                 task_list.push(new_task)
             }
         } catch (error) {
-            if (check_error) {
+            if (debug_mode) {
                 console.log(error);
             }
         }
         sendResponse(task_list);
+    } else if (message.action == "parse_gihub_repo") {
+        var latest_version_info = ["0.0.0",""]
+        let parser = new DOMParser();
+        let doc = parser.parseFromString(message.payload.html_text, "text/html");
+        try {
+            let release_item_element = doc.getElementsByClassName("Link--primary d-flex no-underline")[0];
+            let latest_version = release_item_element.getAttribute("href").split("/tag/")[1];
+            let release_date = release_item_element.getElementsByTagName("relative-time")[0].innerHTML;
+            latest_version_info = [latest_version, release_date];
+        } catch (error) {
+            if (debug_mode) {
+                console.log(error);
+            }
+        }
+        sendResponse(latest_version_info);
     }
 });

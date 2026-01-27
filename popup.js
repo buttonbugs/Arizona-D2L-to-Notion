@@ -19,6 +19,8 @@ const zybook_course_url = "https://learn.zybooks.com/zybook/"
 const gradescope_host_name = "https://www.gradescope.com"
 const gradescope_course_url = "https://www.gradescope.com/courses/"
 
+const github_repo_releases_url = "https://github.com/buttonbugs/Arizona-D2L-to-Notion/releases"
+
 let d2l_and_notion = document.getElementById("d2l_and_notion").lastElementChild.children
 
 var showing_notion_settings = false
@@ -35,6 +37,8 @@ var notion_status = [
     ["From Notion Database", "Click to sync", 0, "green"],
     ["To Notion Database", "Click to sync", 0, "green"]
 ]
+
+var latest_version_info = ["", "", false]
 
 /**
  * Course list rendering
@@ -369,6 +373,24 @@ chrome.storage.local.get(["notion_status"], (result) => {
     notion_status = result["notion_status"] || [];
     load_notion_status()
 });
+// load latest_version_info
+chrome.storage.local.get(["latest_version_info"], (result) => {
+    latest_version_info = result["latest_version_info"] || ["", "", false];
+
+    const latest_version_info_element = document.getElementById("latest_version_info");
+    latest_version_info_element.addEventListener("click", ()=>{
+        window.open(github_repo_releases_url);
+    })
+
+    if (latest_version_info[2]) {
+        latest_version_info_element.style.display = "flex";
+        latest_version_info_element.firstElementChild.children[1].lastElementChild.innerHTML = "Arizona D2L to Notion " + latest_version_info[0] + " | " + latest_version_info[1];
+    } else {
+        latest_version_info_element.style.display = "none";
+    }
+});
+
+
 
 // get course list
 (async () => {

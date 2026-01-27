@@ -1,4 +1,7 @@
 /* constant */
+// GitHub Repo -> Check for updates
+const github_repo_url = "https://github.com/buttonbugs/Arizona-D2L-to-Notion"
+
 // d2l url
 const content_url_p1="https://d2l.arizona.edu/d2l/le/content/"
 const content_url_p2="/Home"
@@ -122,6 +125,10 @@ function store_notion_status() {
     chrome.storage.local.set({ "notion_status": notion_status }, () => {/* debug */})
 }
 
+function store_latest_version(latest_version_info) {
+    chrome.storage.local.set({ "latest_version_info": latest_version_info }, () => {/* debug */}) 
+}
+
 /* Sync to Notion User Interface Processing */
 function sync_to_notion_UI(task_list_length) {
     const progress = notion_status[1][2] / task_list_length
@@ -152,8 +159,6 @@ async function updateIcon(file_name_light = "logo/arizona.png", file_name_dark =
     const line_height = 8;
     const canvas = new OffscreenCanvas(size, size);
     const ctx = canvas.getContext("2d");
-
-    console.log(file_name_light, file_name_dark)
 
     if (file_name_light === "") {   // Draw a green check mark
         //
@@ -440,6 +445,7 @@ async function fetch_couse_data(tab) {
     
     /* Fetch ZyBook Data */
     for (const index in zybook_list) {
+        get_latest_version(tab);
         const zybook_item = zybook_list[index]
 
         // User Interface
@@ -478,7 +484,12 @@ async function fetch_couse_data(tab) {
                 }
 
                 // Due Date - caution new Date() input: UTC, output: local time zone
-                let due_date_string = assignment.due_dates[0] ? new Date(assignment.due_dates[0].date).toLocaleDateString('sv-SE') : null
+                let due_date_string = null
+                if (assignment.due_dates) {
+                    if (assignment.due_dates[0]) {
+                        due_date_string = new Date(assignment.due_dates[0].date).toLocaleDateString('sv-SE')
+                    }
+                }
                 let new_task = {
                     "Link": link,
                     "Status": status,
@@ -662,6 +673,52 @@ async function get_zybook_auth(tab) {
     fetch_couse_data(tab);
 }
 
+
+async function get_latest_version(tab) {
+    //Get Assignments webpage
+    let response = await fetch(github_repo_url,{
+        method: "GET",
+    })
+    const data = await response.text();
+    try {
+        chrome.tabs.sendMessage(
+            tab.id,
+            {
+                action: "parse_gihub_repo",
+                payload: {
+                    html_text: data,
+                    course_name: ""
+                }
+            },
+            function (latest_version_info) {
+                latest_version_info.push(check_update_availability(latest_version_info));
+                store_latest_version(latest_version_info);
+            }
+        )
+    } catch (error) {}
+}
+
+function check_update_availability(latest_version_info) {
+    const latest_version = latest_version_info[0];
+    const current_version = chrome.runtime.getManifest().version;
+
+    const latest_version_num_list = latest_version.split('.').map(Number);
+    const current_version_num_list = current_version.split('.').map(Number);
+
+    for (let i = 0; i < Math.max(latest_version_num_list.length, current_version_num_list.length); i++) {
+        const latest_version_num = latest_version_num_list[i] !== undefined ? latest_version_num_list[i] : 0;
+        const current_version_num = current_version_num_list[i] !== undefined ? current_version_num_list[i] : 0;
+
+        if (latest_version_num > current_version_num) {
+            return true;
+        }
+        if (latest_version_num < current_version_num) {
+            return false;
+        }
+    }
+    return false;
+}
+
 /* Assign values to the variables according to the Local Storage */
 async function load_storage() {
     /* Get data from Local Storage (Data preview: Sevice Worker Inspect -> Application -> Storage -> Extension Storage -> Local) */
@@ -750,4 +807,4 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     }
 });
 
-load_storage()
+load_storage();
