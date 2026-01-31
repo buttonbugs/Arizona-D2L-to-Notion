@@ -22,7 +22,10 @@ const zybook_local_auth_key = "ember_simple_auth-session-5"
 const gradescope_course_url = "https://www.gradescope.com/courses/"
 
 // Pearson
-// https://session.physics-mastering.pearson.com/myct/mastering?action=getStdAssignmentData
+const pearson_course_url_p1 = "https://session."            // "<subject>-mastering" is treated as course id
+const pearson_course_url_p2 = ".pearson.com/myct/"
+const pearson_assignment_page_url_p2 = ".pearson.com/myct/itemView?assignmentProblemID="
+const pearson_assignment_json_url_p2 = ".pearson.com/myct/mastering?action=getStdAssignmentData"
 
 // notion url
 const notion_query_data_sourse_url_p1 = "https://api.notion.com/v1/data_sources/"
@@ -42,6 +45,7 @@ var course_list = []
 var zybook_list = []
 var zybook_token = ""
 var gradescope_list = []
+var pearson_list = []
 
 var notion_status = [
     ["From Notion Database", "Loading ...", 0, "green"],
@@ -119,6 +123,10 @@ function store_zybook_token() {
 
 function store_gradescope_list() {
     chrome.storage.local.set({ "gradescope_list": gradescope_list }, () => {/* debug */})
+}
+
+function store_pearson_list() {
+    chrome.storage.local.set({ "pearson_list": pearson_list }, () => {/* debug */})
 }
 
 function store_notion_status() {
@@ -260,8 +268,16 @@ async function fetch_couse_data(tab) {
         gradescope_list[index][2] = 0
         gradescope_list[index][3] = "orange"
     }
+
+    // Reset pearson_list status
+    for (const index in pearson_list) {
+        pearson_list[index][2] = 0
+        pearson_list[index][3] = "orange"
+    }
+    
     store_zybook_list()
     store_gradescope_list()
+    store_pearson_list()
     updateIcon()
     set_badge()
 
@@ -734,6 +750,7 @@ async function load_storage() {
     zybook_list = storage_data["zybook_list"] || [];
     zybook_token = storage_data["zybook_token"] || "";
     gradescope_list = storage_data["gradescope_list"] || [];
+    pearson_list = storage_data["pearson_list"] || [];
     notion_token = storage_data["notion_settings_token"] || "";
     data_source_id = storage_data["notion_settings_data_sourse"] || "";
     database_id = storage_data["notion_settings_database"] || "";
@@ -748,10 +765,16 @@ async function sync_data(tab) {
         try {
             if (tab.url.includes("d2l.arizona.edu")) {
                 fetch_couse_data(tab);
+
             } else if (tab.url.includes(zybook_course_url)) {
                 get_zybook_auth(tab);
+
             } else if (tab.url.includes(gradescope_course_url)) {
                 fetch_couse_data(tab);
+
+            } else if (tab.url.includes(pearson_assignment_page_url_p2)) {
+                fetch_couse_data(tab);
+
             }
         } catch (error) {
             host_log(tab, "crx error")
@@ -796,6 +819,14 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     } else if (message.action === "delete_gradescope") {
         gradescope_list.splice(message.payload, 1)
         store_gradescope_list()
+
+    } else if (message.action === "add_pearson") {          // pearson
+        pearson_list.push(message.payload)
+        store_pearson_list()
+
+    } else if (message.action === "delete_pearson") {
+        pearson_list.splice(message.payload, 1)
+        store_pearson_list()
         
     } else if (message.action === "resync") {               // resync
         // Triggers when "From/To Notion Database" button clicked

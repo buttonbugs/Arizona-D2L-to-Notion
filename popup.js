@@ -19,6 +19,13 @@ const zybook_course_url = "https://learn.zybooks.com/zybook/"
 const gradescope_host_name = "https://www.gradescope.com"
 const gradescope_course_url = "https://www.gradescope.com/courses/"
 
+// Pearson Master
+const pearson_host_name = "pearson.com/"
+const pearson_course_home_url = "https://mycourses.pearson.com/course-home#/tab/active"
+const pearson_course_url_p1 = "https://session."            // "<subject>-mastering" is treated as course id
+const pearson_course_url_p2 = ".pearson.com/myct/"
+
+// GitHub url for releases
 const github_repo_releases_url = "https://github.com/buttonbugs/Arizona-D2L-to-Notion/releases"
 
 let d2l_and_notion = document.getElementById("d2l_and_notion").lastElementChild.children
@@ -36,6 +43,10 @@ var gradescope_list = [
 var notion_status = [
     ["From Notion Database", "Click to sync", 0, "green"],
     ["To Notion Database", "Click to sync", 0, "green"]
+]
+
+var pearson_list = [
+    ['Loading Gradescope list', 'loading ...', 0, 'blue']
 ]
 
 var latest_version_info = ["", "", false]
@@ -126,7 +137,7 @@ function get_course_index(course_id, list) {
 }
 
 function compare_url(course_url,url) {
-    return url.indexOf(course_url)==0 && url.length > course_url.length
+    return url.indexOf(course_url) >=0 && url.length > course_url.length
 }
 
 async function get_course_name(tab) {
@@ -198,6 +209,14 @@ async function load_current_tab_info() {
             window.open(gradescope_course_url + course_id)
         })
     )
+    render_sync_list("pearson_list", pearson_list, "Master",
+        ((course_id)=>{
+            window.open(pearson_course_home_url)
+        }),
+        ((course_id)=>{
+            window.open(pearson_course_url_p1 + course_id + pearson_course_url_p2)
+        })
+    )
 
     let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     let url = tab.url
@@ -243,6 +262,12 @@ async function load_current_tab_info() {
             current_course_id = url.split("?")[0].split("/")[4]
             current_course_name = await get_gradescope_name(tab)
         }
+    } else if (compare_url(pearson_host_name,url)) {
+        logo = "logo/pearson.png"
+        if (compare_url(pearson_course_url_p1,url) && compare_url(pearson_course_url_p2,url)) {
+            current_course_id = url.split(pearson_course_url_p2)[0].split(pearson_course_url_p1)[1]
+            current_course_name = current_course_id.split("-")[1] + " " + current_course_id.split("-")[0]
+        }
     }
 
     // Convert course name to upper case, especially in Gradescope
@@ -287,6 +312,18 @@ async function load_current_tab_info() {
             add_course_element.lastElementChild.firstElementChild.lastElementChild.onclick = () => {
                 chrome.runtime.sendMessage({
                     action: "add_gradescope",
+                    payload: [current_course_name,current_course_id,0,"blue"]
+                })
+            }
+            
+            // Show "Add this to your sync list?"
+            add_course_element.style.display = "flex"
+        } else if (logo == "logo/pearson.png" && get_course_index(current_course_id, pearson_list) == -1) {
+
+            add_course_detail_element.lastElementChild.innerHTML = pearson_course_url_p1 + current_course_id + pearson_course_url_p2
+            add_course_element.lastElementChild.firstElementChild.lastElementChild.onclick = () => {
+                chrome.runtime.sendMessage({
+                    action: "add_pearson",
                     payload: [current_course_name,current_course_id,0,"blue"]
                 })
             }
@@ -394,10 +431,11 @@ chrome.storage.local.get(["latest_version_info"], (result) => {
 
 // get course list
 (async () => {
-    const result = await chrome.storage.local.get(["course_list","zybook_list","gradescope_list"]);
+    const result = await chrome.storage.local.get(["course_list", "zybook_list", "gradescope_list", "pearson_list"]);
     course_list = result["course_list"] || [];
     zybook_list = result["zybook_list"] || [];
     gradescope_list = result["gradescope_list"] || [];
+    pearson_list = result["pearson_list"] || [];
 
     load_current_tab_info()
     
@@ -414,6 +452,10 @@ chrome.storage.local.get(["latest_version_info"], (result) => {
             }
             if (changes["gradescope_list"]) {
                 gradescope_list = changes["gradescope_list"].newValue || [];
+                load_current_tab_info()
+            }
+            if (changes["pearson_list"]) {
+                pearson_list = changes["pearson_list"].newValue || [];
                 load_current_tab_info()
             }
             if (changes["notion_status"]) {

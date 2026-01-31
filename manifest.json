@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Arizona D2L to Notion",
-    "version": "1.4.2",
+    "version": "1.5.0",
     "description": "An extension that can sync your D2L course data into a Notion database.",
     "background": {
         "service_worker": "./background.js"
@@ -19,7 +19,8 @@
             "matches": [
                 "https://d2l.arizona.edu/*",
                 "https://learn.zybooks.com/*",
-                "https://www.gradescope.com/*"
+                "https://www.gradescope.com/*",
+                "https://*.pearson.com/*"
             ],
             "js": ["./content_script.js"]
         }
@@ -29,7 +30,8 @@
         "https://api.notion.com/*",
         "https://d2l.arizona.edu/*",
         "https://*.zybooks.com/*",
-        "https://www.gradescope.com/*"
+        "https://www.gradescope.com/*",
+        "https://*.pearson.com/*"
     ],
     "permissions": [
         "activeTab",
