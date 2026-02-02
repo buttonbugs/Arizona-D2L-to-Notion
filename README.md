@@ -410,13 +410,13 @@ The numbers refer to the numbers of tasks synced or processed
 
 ### Functions
 
-**Quickly Open Course Homepages**
+**Rename the Course**
 
-👉 Click the sync icon in sync list
+👉 Click the sync icon in the sync list
 
 **Quickly Open Course Content Pages**
 
-👉 Click the course name in sync list
+👉 Click the course name in the sync list
 
 **Remove Course from Sync List**
 
