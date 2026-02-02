@@ -137,6 +137,65 @@ function store_latest_version(latest_version_info) {
     chrome.storage.local.set({ "latest_version_info": latest_version_info }, () => {/* debug */}) 
 }
 
+/* Fake eval() */
+function list_eval(list_name, new_value) {
+    // Array.isArray(new_value) to check whether to set or to read the list_name
+    let set_value = Array.isArray(new_value);
+    switch (list_name) {
+        case "course":
+            if (set_value) {
+                course_list = new_value;
+                store_course_list();
+            }
+            return course_list;
+    
+        case "zybook":
+            if (set_value) {
+                zybook_list = new_value;
+                store_zybook_list();
+            }
+            return zybook_list;
+    
+        case "gradescope":
+            if (set_value) {
+                gradescope_list = new_value;
+                store_gradescope_list();
+            }
+            return gradescope_list;
+    
+        case "pearson":
+            if (set_value) {
+                pearson_list = new_value;
+                store_pearson_list();
+            }
+            return pearson_list;
+
+        default:
+            return;
+    }
+}
+
+function message_action(list_name, action, payload) {
+    var list = list_eval(list_name);
+    switch (action) {
+        case "add":
+            list.push(payload);
+            break;
+            
+        case "delete":
+            list.splice(payload, 1)
+            break;
+
+        case "rename":
+            list[payload["index"]][0] = payload["new_name"]
+            break;
+
+        default:
+            break;
+    }
+    list_eval(list_name, list);
+}
+
 /* Sync to Notion User Interface Processing */
 function sync_to_notion_UI(task_list_length) {
     const progress = notion_status[1][2] / task_list_length
@@ -795,40 +854,15 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 })
 
 //Receive messages
-chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
-    if (message.action === "add_course") {                  // D2L
-        course_list.push(message.payload)
-        store_course_list()
-
-    } else if (message.action === "delete_course") {
-        course_list.splice(message.payload, 1)
-        store_course_list()
-
-    } else if (message.action === "add_zybook") {           // zybook
-        zybook_list.push(message.payload)
-        store_zybook_list()
-
-    } else if (message.action === "delete_zybook") {
-        zybook_list.splice(message.payload, 1)
-        store_zybook_list()
-
-    } else if (message.action === "add_gradescope") {       // gradescope
-        gradescope_list.push(message.payload)
-        store_gradescope_list()
-
-    } else if (message.action === "delete_gradescope") {
-        gradescope_list.splice(message.payload, 1)
-        store_gradescope_list()
-
-    } else if (message.action === "add_pearson") {          // pearson
-        pearson_list.push(message.payload)
-        store_pearson_list()
-
-    } else if (message.action === "delete_pearson") {
-        pearson_list.splice(message.payload, 1)
-        store_pearson_list()
-        
-    } else if (message.action === "resync") {               // resync
+chrome.runtime.onMessage.addListener(function(message) {
+    if (
+        message.action.includes("add_") ||
+        message.action.includes("delete_") ||
+        message.action.includes("rename_")
+    ) {
+        let message_action_split = message.action.split("_");
+        message_action(message_action_split[1], message_action_split[0], message.payload);
+    } else if (message.action === "resync") {
         // Triggers when "From/To Notion Database" button clicked
         if (notion_status[1][3] == "green") {
             chrome.tabs.query({ active: true, currentWindow: true }).then(tabs => {

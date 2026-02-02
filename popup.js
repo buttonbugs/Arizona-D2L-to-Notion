@@ -89,7 +89,16 @@ function render_sync_list(element_id, sync_list, subtitle, sync_onclick, detail_
             })
         }).bind(null, index), false)
 
-        sync_element.addEventListener("click", sync_onclick.bind(null, sync_list[index][1]), false)
+        sync_element.addEventListener("click", ((index, old_name)=>{
+            let new_name = prompt("Rename the course " + old_name + ":", old_name);
+            if (new_name) {
+                chrome.runtime.sendMessage({
+                    action: "rename_" + element_id.split("_")[0],
+                    payload: {"index": index, "new_name": new_name}
+                })
+            }
+        }).bind(null, index, sync_list[index][0]), false)
+        // sync_element.addEventListener("click", sync_onclick.bind(null, sync_list[index][1]), false)      // Open website in new tab
         detail_element.addEventListener("click", detail_onclick.bind(null, sync_list[index][1]), false)
 
         //set content
