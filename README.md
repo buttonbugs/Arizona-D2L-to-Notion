@@ -11,7 +11,7 @@ Useful Links:
 [![Version](https://img.shields.io/github/v/tag/buttonbugs/Arizona-D2L-to-Notion)](https://github.com/buttonbugs/D2L-Darkspace/releases)
 [![Notion API](https://img.shields.io/badge/Notion%20API-2025--09--03-blue.svg)](https://developers.notion.com/)
 
-Arizona D2L to Notion is a chrome extension that can sync your [Arizona D2L](https://d2l.arizona.edu/d2l/home), [zyBooks](https://www.zybooks.com/), [Gradescope](https://www.gradescope.com/), [Pearson Mastering](https://mycourses.pearson.com/course-home) course data (assignments, quizzes, exams, and submission status) into a [Notion database](https://www.notion.com/help/intro-to-databases).
+Arizona D2L to Notion is a chrome extension that can sync your [Arizona D2L](https://d2l.arizona.edu/d2l/home), [zyBooks](https://www.zybooks.com/), [Gradescope](https://www.gradescope.com/), [Pearson Mastering](https://mycourses.pearson.com/course-home) and [WebAssign](https://www.webassign.net/v4cgi/student.pl) course data (assignments, quizzes, exams, and submission status) into a [Notion database](https://www.notion.com/help/intro-to-databases).
 
 ## Preview
 ### Table View
