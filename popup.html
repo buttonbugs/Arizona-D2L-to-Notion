@@ -104,7 +104,7 @@
                     <img src="icon/settings.svg" id="notion_settings_button" style="rotate: 45deg;">
                 </div>
             </div>
-            <div id="notion_settings" style="height: 0; overflow: hidden;">
+            <div id="notion_settings" style="height: 0;">
                 <div class="long">
                     <div>Notion API Token</div>
                     <input type="password" id="notion_settings_token" placeholder="ntn_xxxxxxxxxxxxxxxxxx">
@@ -116,6 +116,19 @@
                 <div class="long">
                     <div>Database ID</div>
                     <input type="password" id="notion_settings_database" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+                </div>
+                <div class="long"></div>
+                <div class="long">
+                    <div>Extension Name</div>
+                    <input type="text" id="extension_name" value="-" disabled>
+                </div>
+                <div class="long">
+                    <div>Current Version</div>
+                    <input type="text" id="current_version" value="-" disabled>
+                </div>
+                <div class="long">
+                    <div style="cursor: pointer;">GitHub Repo</div>
+                    <input type="text" id="github_repo" value="-" disabled>
                 </div>
             </div>
             <!-- Latest Version Info -->

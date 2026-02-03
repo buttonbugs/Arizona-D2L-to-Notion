@@ -711,6 +711,54 @@ async function fetch_couse_data(tab) {
         store_pearson_list()
     }
 
+    /* Fetch WebAssign Data */
+    for (const index in webassign_list) {
+        const webassign_item = webassign_list[index]
+
+        // User Interface
+        updateIcon("logo/webassign.png")
+        webassign_list[index][3] = "blue"
+        store_webassign_list()
+
+        //Get WebAssign webpage
+        let response = await fetch(webassign_assignment_json_url_p1 + webassign_item[1] + webassign_assignment_json_url_p2, {
+            method: "GET",
+            credentials: "include"
+        })
+        let data = await response.json();
+        
+        if (data["data"]) {
+            let assignments = [...data["data"]["currentAssignments"], ...data["data"]["pastAssignments"]];
+            try {
+                for (const task of assignments) {
+                    let new_task = {
+                        "Link": webassign_assignment_url + task["id"],
+                        "Status": task["score"] ? (task["score"]["score"] == task["score"]["total"] ? "Done" : null) : null,
+                        "Course": webassign_item[0],
+                        "Due Date": task["due"] ? task["due"].split("T")[0] : null,
+                        "Type": null,
+                        "Task": task["name"]
+                    }
+                    task_list.push(new_task);
+                    webassign_list[index][2] += 1;
+                    store_webassign_list()
+                }
+                webassign_list[index][3] = "green";
+            } catch (error) {
+                webassign_list[index][3] = "red"
+                badge_text = "E"
+                set_badge("#FF4488")
+                host_log(tab, "WebAssign Task Error");
+            }
+        } else {
+            webassign_list[index][3] = "red"
+            badge_text = "E"
+            set_badge("#FF4488")
+            host_log(tab, "No Access to WebAssign");
+        }
+        store_webassign_list()
+    }
+
     /* Add task_list to Notion */
     notion_status[1][1] = "Syncing course data - 0.0%"
     notion_status[1][3] = "blue"

@@ -30,8 +30,10 @@ const webassign_host_url = "https://www.webassign.net/"
 const webassign_course_url = "https://www.webassign.net/v4cgi/student.pl"
 const webassign_assignment_url = "https://www.webassign.net/web/Student/Assignment-Responses/last?dep="
 
-// GitHub url for releases
+// GitHub url
 const github_repo_releases_url = "https://github.com/buttonbugs/Arizona-D2L-to-Notion/releases"
+const github_repo_url = "https://github.com/buttonbugs/Arizona-D2L-to-Notion"
+const github_repo = "/buttonbugs/Arizona-D2L-to-Notion"
 
 let d2l_and_notion = document.getElementById("d2l_and_notion").lastElementChild.children
 
@@ -422,8 +424,8 @@ function jump_to_notion_page() {
 //Show Notion Setting
 document.getElementById("notion_settings_button").addEventListener("click", () => {
     showing_notion_settings = !showing_notion_settings
-    document.getElementById("notion_settings_button").style.rotate = showing_notion_settings ? "135deg" : "45deg"
-    document.getElementById("notion_settings").style.height = showing_notion_settings ? "96px" : "0"
+    document.getElementById("notion_settings_button").style.rotate = showing_notion_settings ? "135deg" : "45deg";
+    document.getElementById("notion_settings").style.height = showing_notion_settings ? document.getElementById("notion_settings").scrollHeight + "px" : "0";
 });
 //notion_settings_token
 document.getElementById("notion_settings_token").addEventListener("input", (event)=>{
@@ -471,7 +473,8 @@ chrome.storage.local.get(["notion_status"], (result) => {
     notion_status = result["notion_status"] || [];
     load_notion_status()
 });
-// load latest_version_info
+
+// load latest version info
 chrome.storage.local.get(["latest_version_info"], (result) => {
     latest_version_info = result["latest_version_info"] || ["", "", false];
 
@@ -487,7 +490,6 @@ chrome.storage.local.get(["latest_version_info"], (result) => {
         latest_version_info_element.style.display = "none";
     }
 });
-
 
 
 // get course list
@@ -534,3 +536,14 @@ chrome.storage.local.get(["latest_version_info"], (result) => {
         }
     });
 })();
+
+// load current version info
+const manifest = chrome.runtime.getManifest()
+document.getElementById("extension_name").value = manifest.name;
+document.getElementById("current_version").value = manifest.version;
+document.getElementById("github_repo").value = github_repo;
+document.getElementById("github_repo").parentElement.addEventListener("click", ()=>{
+    console.log("Open open");
+    
+    window.open(github_repo_url);
+})
