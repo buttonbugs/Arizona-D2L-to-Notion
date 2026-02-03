@@ -24,8 +24,12 @@ const gradescope_course_url = "https://www.gradescope.com/courses/"
 // Pearson
 const pearson_course_url_p1 = "https://session."            // "<subject>-mastering" is treated as course id
 const pearson_course_url_p2 = ".pearson.com/myct/"
-const pearson_assignment_page_url_p2 = ".pearson.com/myct/itemView?assignmentProblemID="
+const pearson_assignment_problem_url_p2 = ".pearson.com/myct/itemView?"
+const pearson_assignment_problem_url_p3 = "assignmentProblemID="
+const pearson_assignment_page_url_p2 = ".pearson.com/myct/mastering#/assignment/"
 const pearson_assignment_json_url_p2 = ".pearson.com/myct/mastering?action=getStdAssignmentData"
+
+// https://session.physics-mastering.pearson.com/myct/mastering#/assignment/
 
 // notion url
 const notion_query_data_sourse_url_p1 = "https://api.notion.com/v1/data_sources/"
@@ -633,8 +637,56 @@ async function fetch_couse_data(tab) {
             store_gradescope_list()
             badge_text = "E"
             set_badge("#FF4488")
-            host_log(tab, "Parse Quiz webpage error")
+            host_log(tab, "Parse Gradescope webpage error");
         }
+    }
+
+    /* Fetch Pearson Data */
+    for (const index in pearson_list) {
+        const pearson_item = pearson_list[index]
+
+        // User Interface
+        updateIcon("logo/pearson.png")
+        pearson_list[index][3] = "blue"
+        store_pearson_list()
+
+        //Get Pearson webpage
+        let response = await fetch(pearson_course_url_p1 + pearson_item[1] + pearson_assignment_json_url_p2, {
+            method: "GET",
+            credentials: "include"
+        })
+        let data = await response.text();
+
+        try {
+            let json_data = JSON.parse(data)
+            if (json_data["result"] == "success") {
+                for (const task of json_data["data"]) {
+                    // Not all task have task["viewURI"]
+                    let link = pearson_course_url_p1 + pearson_item[1] + pearson_assignment_page_url_p2 + task["assignmentID"];
+                    let due_date_string = Array.isArray(task["dateDueArray"]) ? task["dateDueArray"].slice(0,3).join("-") : null;
+                    let new_task = {
+                        "Link": link,
+                        "Status": task["isComplete"] ? "Done" : null,
+                        "Course": pearson_item[0],
+                        "Due Date": due_date_string,
+                        "Type": null,
+                        "Task": task["title"]
+                    }
+                    task_list.push(new_task);
+                    pearson_list[index][2] += 1;
+                    store_pearson_list()
+                }
+                pearson_list[index][3] = "green";
+            } else {
+                throw new Error('json_data["result"] != "success"');
+            }
+        } catch (error) {
+            pearson_list[index][3] = "red"
+            badge_text = "E"
+            set_badge("#FF4488")
+            host_log(tab, "Parse Pearson JSON error");
+        }
+        store_pearson_list()
     }
 
     /* Add task_list to Notion */
@@ -766,8 +818,12 @@ async function get_latest_version(tab) {
                 }
             },
             function (latest_version_info) {
-                latest_version_info.push(check_update_availability(latest_version_info));
-                store_latest_version(latest_version_info);
+                try {
+                    latest_version_info.push(check_update_availability(latest_version_info));
+                    store_latest_version(latest_version_info);
+                } catch (error) {
+                    console.log("latest_version_info.push() error", error);
+                }
             }
         )
     } catch (error) {}
@@ -831,7 +887,7 @@ async function sync_data(tab) {
             } else if (tab.url.includes(gradescope_course_url)) {
                 fetch_couse_data(tab);
 
-            } else if (tab.url.includes(pearson_assignment_page_url_p2)) {
+            } else if (tab.url.includes(pearson_assignment_problem_url_p2) && tab.url.includes(pearson_assignment_problem_url_p3)) {
                 fetch_couse_data(tab);
 
             }
