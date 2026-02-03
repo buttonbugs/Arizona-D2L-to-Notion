@@ -29,7 +29,10 @@ const pearson_assignment_problem_url_p3 = "assignmentProblemID="
 const pearson_assignment_page_url_p2 = ".pearson.com/myct/mastering#/assignment/"
 const pearson_assignment_json_url_p2 = ".pearson.com/myct/mastering?action=getStdAssignmentData"
 
-// https://session.physics-mastering.pearson.com/myct/mastering#/assignment/
+// WebAssign
+const webassign_assignment_url = "https://www.webassign.net/web/Student/Assignment-Responses/last?dep="
+const webassign_assignment_json_url_p1 = "https://www.webassign.net/web/bff/section/"
+const webassign_assignment_json_url_p2 = "/assignments"
 
 // notion url
 const notion_query_data_sourse_url_p1 = "https://api.notion.com/v1/data_sources/"
@@ -50,6 +53,7 @@ var zybook_list = []
 var zybook_token = ""
 var gradescope_list = []
 var pearson_list = []
+var webassign_list = []
 
 var notion_status = [
     ["From Notion Database", "Loading ...", 0, "green"],
@@ -133,6 +137,10 @@ function store_pearson_list() {
     chrome.storage.local.set({ "pearson_list": pearson_list }, () => {/* debug */})
 }
 
+function store_webassign_list() {
+    chrome.storage.local.set({ "webassign_list": webassign_list }, () => {/* debug */})
+}
+
 function store_notion_status() {
     chrome.storage.local.set({ "notion_status": notion_status }, () => {/* debug */})
 }
@@ -173,6 +181,13 @@ function list_eval(list_name, new_value) {
                 store_pearson_list();
             }
             return pearson_list;
+
+        case "webassign":
+            if (set_value) {
+                webassign_list = new_value;
+                store_webassign_list();
+            }
+            return webassign_list;
 
         default:
             return;
@@ -337,10 +352,17 @@ async function fetch_couse_data(tab) {
         pearson_list[index][2] = 0
         pearson_list[index][3] = "orange"
     }
+
+    // Reset webassign_list status
+    for (const index in webassign_list) {
+        webassign_list[index][2] = 0
+        webassign_list[index][3] = "orange"
+    }
     
     store_zybook_list()
     store_gradescope_list()
     store_pearson_list()
+    store_webassign_list()
     updateIcon()
     set_badge()
 
@@ -866,6 +888,7 @@ async function load_storage() {
     zybook_token = storage_data["zybook_token"] || "";
     gradescope_list = storage_data["gradescope_list"] || [];
     pearson_list = storage_data["pearson_list"] || [];
+    webassign_list = storage_data["webassign_list"] || [];
     notion_token = storage_data["notion_settings_token"] || "";
     data_source_id = storage_data["notion_settings_data_sourse"] || "";
     database_id = storage_data["notion_settings_database"] || "";
@@ -888,6 +911,9 @@ async function sync_data(tab) {
                 fetch_couse_data(tab);
 
             } else if (tab.url.includes(pearson_assignment_problem_url_p2) && tab.url.includes(pearson_assignment_problem_url_p3)) {
+                fetch_couse_data(tab);
+
+            } else if (tab.url.includes(webassign_assignment_url)) {
                 fetch_couse_data(tab);
 
             }

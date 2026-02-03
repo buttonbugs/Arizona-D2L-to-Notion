@@ -25,6 +25,11 @@ const pearson_course_home_url = "https://mycourses.pearson.com/course-home#/tab/
 const pearson_course_url_p1 = "https://session."            // "<subject>-mastering" is treated as course id
 const pearson_course_url_p2 = ".pearson.com/myct/"
 
+// WebAssign url
+const webassign_host_url = "https://www.webassign.net/"
+const webassign_course_url = "https://www.webassign.net/v4cgi/student.pl"
+const webassign_assignment_url = "https://www.webassign.net/web/Student/Assignment-Responses/last?dep="
+
 // GitHub url for releases
 const github_repo_releases_url = "https://github.com/buttonbugs/Arizona-D2L-to-Notion/releases"
 
@@ -40,14 +45,17 @@ var zybook_list = [
 var gradescope_list = [
     ['Loading Gradescope list', 'loading ...', 0, 'blue']
 ]
+var pearson_list = [
+    ['Loading Pearson list', 'loading ...', 0, 'blue']
+]
+var webassign_list = [
+    ['Loading WebAssign list', 'loading ...', 0, 'blue']
+]
 var notion_status = [
     ["From Notion Database", "Click to sync", 0, "green"],
     ["To Notion Database", "Click to sync", 0, "green"]
 ]
 
-var pearson_list = [
-    ['Loading Gradescope list', 'loading ...', 0, 'blue']
-]
 
 var latest_version_info = ["", "", false]
 
@@ -191,6 +199,22 @@ async function get_gradescope_name(tab) {
     return result
 }
 
+
+async function get_webassign_course(tab) {
+    const [{ result }] = await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        world: 'MAIN',      // Crucial: allows access to the webpage's JS variable
+        func: () => {
+            try {
+                return CengageAnalytics["course"]   // The webpage's variable
+            } catch (error) {
+                return {"contextId": "", "name": ""}
+            }
+        }
+    })
+    return result
+}
+
 async function load_current_tab_info() {
     //render d2l course list
     render_sync_list("course_list", course_list, "D2L Course ID",
@@ -224,6 +248,14 @@ async function load_current_tab_info() {
         }),
         ((course_id)=>{
             window.open(pearson_course_url_p1 + course_id + pearson_course_url_p2)
+        })
+    )
+    render_sync_list("webassign_list", webassign_list, "WebAssign Course ID",
+        ((course_id)=>{
+            window.open(webassign_course_url)
+        }),
+        ((course_id)=>{
+            window.open(webassign_course_url)
         })
     )
 
@@ -276,6 +308,14 @@ async function load_current_tab_info() {
         if (compare_url(pearson_course_url_p1,url) && compare_url(pearson_course_url_p2,url)) {
             current_course_id = url.split(pearson_course_url_p2)[0].split(pearson_course_url_p1)[1]
             current_course_name = current_course_id.split("-")[1] + " " + current_course_id.split("-")[0]
+        }
+    } else if (compare_url(webassign_host_url, url)) {
+        logo = "logo/webassign.png"
+        if (compare_url(webassign_course_url, url) || compare_url(webassign_assignment_url, url)) {
+            let webassign_course_data = await get_webassign_course(tab);
+            console.log(webassign_course_data);
+            current_course_id = webassign_course_data["contextId"].split("-").at(-1);
+            current_course_name = webassign_course_data["name"].split(" ").slice(0,2).join(" ");
         }
     }
 
@@ -333,6 +373,18 @@ async function load_current_tab_info() {
             add_course_element.lastElementChild.firstElementChild.lastElementChild.onclick = () => {
                 chrome.runtime.sendMessage({
                     action: "add_pearson",
+                    payload: [current_course_name,current_course_id,0,"blue"]
+                })
+            }
+            
+            // Show "Add this to your sync list?"
+            add_course_element.style.display = "flex"
+        } else if (logo == "logo/webassign.png" && get_course_index(current_course_id, webassign_list) == -1) {
+
+            add_course_detail_element.lastElementChild.innerHTML = "WebAssign Course ID: " + current_course_id
+            add_course_element.lastElementChild.firstElementChild.lastElementChild.onclick = () => {
+                chrome.runtime.sendMessage({
+                    action: "add_webassign",
                     payload: [current_course_name,current_course_id,0,"blue"]
                 })
             }
@@ -440,11 +492,12 @@ chrome.storage.local.get(["latest_version_info"], (result) => {
 
 // get course list
 (async () => {
-    const result = await chrome.storage.local.get(["course_list", "zybook_list", "gradescope_list", "pearson_list"]);
+    const result = await chrome.storage.local.get(["course_list", "zybook_list", "gradescope_list", "pearson_list", "webassign_list"]);
     course_list = result["course_list"] || [];
     zybook_list = result["zybook_list"] || [];
     gradescope_list = result["gradescope_list"] || [];
     pearson_list = result["pearson_list"] || [];
+    webassign_list = result["webassign_list"] || [];
 
     load_current_tab_info()
     
@@ -465,6 +518,10 @@ chrome.storage.local.get(["latest_version_info"], (result) => {
             }
             if (changes["pearson_list"]) {
                 pearson_list = changes["pearson_list"].newValue || [];
+                load_current_tab_info()
+            }
+            if (changes["webassign_list"]) {
+                webassign_list = changes["webassign_list"].newValue || [];
                 load_current_tab_info()
             }
             if (changes["notion_status"]) {

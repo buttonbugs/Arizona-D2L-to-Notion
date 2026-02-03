@@ -20,7 +20,8 @@
                 "https://d2l.arizona.edu/*",
                 "https://learn.zybooks.com/*",
                 "https://www.gradescope.com/*",
-                "https://*.pearson.com/*"
+                "https://*.pearson.com/*",
+                "https://www.webassign.net/*"
             ],
             "js": ["./content_script.js"]
         }
@@ -31,7 +32,8 @@
         "https://d2l.arizona.edu/*",
         "https://*.zybooks.com/*",
         "https://www.gradescope.com/*",
-        "https://*.pearson.com/*"
+        "https://*.pearson.com/*",
+        "https://www.webassign.net/*"
     ],
     "permissions": [
         "activeTab",
