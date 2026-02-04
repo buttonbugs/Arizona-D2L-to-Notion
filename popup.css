@@ -134,6 +134,8 @@ input {
     max-height: 100%;
     border-radius: 25%; cursor: pointer;
 }
+
+/* Dark Mode */
 @media (prefers-color-scheme: dark) {
     html {
         background: black;
@@ -147,5 +149,22 @@ input {
     }
     #notion_settings_button:hover {
         filter: brightness(2) grayscale(0);
+    }
+}
+/* Animation */
+img[src="icon/sync/sync_blue.svg"]{
+    animation-name: sync_rotation;
+    animation-duration: 1s; /* How long one full rotation takes */
+    animation-iteration-count: infinite; /* Makes it loop forever */
+    animation-timing-function: linear; /* Ensures constant speed without pausing */
+}
+
+
+@keyframes sync_rotation {
+    from {
+        transform: rotate(0deg); /* Start at 0 degrees */
+    }
+    to {
+        transform: rotate(360deg); /* End at 360 degrees (a full circle) */
     }
 }
