@@ -69,11 +69,27 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
             let tr_elements = doc.getElementsByClassName("d2l-grid-row")
             for (const tr of tr_elements) {
                 let link_element = tr.getElementsByClassName("d2l-linkheading-link")[0]
+                var due_date_string = null;
+                let due_date_grandparent = tr.getElementsByClassName("d2l-folderdates-wrapper")[0];
+                if (due_date_grandparent) {
+                    let due_date_parent = due_date_grandparent.firstElementChild
+                    if (due_date_parent) {
+                        let due_date_element = due_date_parent.firstElementChild
+                        if (due_date_element) {
+                            try {
+                                // new Date() input: UTC, output: UTC (local time zone is treated as UTC here)
+                                due_date_string = new Date(due_date_element.innerHTML.split(" ").slice(2,5).join(" ")).toISOString().split('T')[0]
+                            } catch (error) {
+                                console.log("Due Date Element Parse Error", error);
+                            }
+                        }
+                    }
+                }
                 let new_task = {
                     "Link": d2l_host_name + link_element.getAttribute("href"),
                     "Status": null,
                     "Course": message.payload.course_name,
-                    "Due Date": null,
+                    "Due Date": due_date_string,
                     "Type": "Discussion",
                     "Task": link_element.innerText
                 }
