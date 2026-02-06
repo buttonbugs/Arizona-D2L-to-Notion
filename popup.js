@@ -543,7 +543,5 @@ document.getElementById("extension_name").value = manifest.name;
 document.getElementById("current_version").value = manifest.version;
 document.getElementById("github_repo").value = github_repo;
 document.getElementById("github_repo").parentElement.addEventListener("click", ()=>{
-    console.log("Open open");
-    
     window.open(github_repo_url);
 })

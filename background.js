@@ -47,6 +47,9 @@ const notion_page_size = 100
 // Status
 var badge_text = ""
 
+// UI Appearance
+var isDark = false;
+
 // Couse list
 var course_list = []
 var zybook_list = []
@@ -88,9 +91,18 @@ function host_copy(tab,content) {
 }
 
 // Dark mode detection
-async function isDarkMode() {
-    const settings = await chrome.action.getUserSettings();
-    return settings.colorScheme === "dark";
+async function getAppearance(tab) {
+    try {
+        const results = await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            func: () => {
+                return window.matchMedia("(prefers-color-scheme: dark)").matches;
+            },
+        });
+        isDark = results[0].result;
+    } catch (error) {
+        console.log("getAppearance() error", error);
+    }
 }
 
 // Calculate D2L fetch progress
@@ -216,7 +228,7 @@ function message_action(list_name, action, payload) {
 }
 
 /* Sync to Notion User Interface Processing */
-function sync_to_notion_UI(task_list_length) {
+function sync_to_notion_UI(tab, task_list_length) {
     const progress = notion_status[1][2] / task_list_length
     notion_status[1][2] += 1
     notion_status[1][1] = "Syncing course data - " + (progress * 100).toFixed(1) + "%"
@@ -224,10 +236,10 @@ function sync_to_notion_UI(task_list_length) {
         notion_status[1][1] = "Synced " + new Date().toLocaleString()
         notion_status[1][3] = "green"
         set_badge("#00FF88")
-        updateIcon()
+        updateIcon(tab)
         setTimeout(async () => {
             if (badge_text == "E") {
-                set_badge(await isDarkMode() ? "#282828" : "#F2F2F2")
+                set_badge(isDark ? "#282828" : "#F2F2F2")
             } else {
                 badge_text = ""
                 set_badge()
@@ -239,8 +251,8 @@ function sync_to_notion_UI(task_list_length) {
 
 /* Update popup icon using canvas*/
 
-async function updateIcon(file_name_light = "logo/arizona.png", file_name_dark = file_name_light) {
-    const dark = await isDarkMode();
+async function updateIcon(tab, file_name_light = "logo/arizona.png", file_name_dark = file_name_light) {
+    await getAppearance(tab);
     const size = 32;
     const line_height = 8;
     const canvas = new OffscreenCanvas(size, size);
@@ -253,7 +265,7 @@ async function updateIcon(file_name_light = "logo/arizona.png", file_name_dark =
     }
     /* Insert image */
     // chrome.runtime.getURL can turn path into chrome-extension://xxxxxxxxxxxxxxxxx/file_name
-    const response = await fetch(chrome.runtime.getURL(dark? file_name_dark : file_name_light));
+    const response = await fetch(chrome.runtime.getURL(isDark? file_name_dark : file_name_light));
     const blob = await response.blob();
     const bitmap = await createImageBitmap(blob);
     
@@ -298,7 +310,7 @@ async function fetch_couse_data(tab) {
     var next_cursor = ""
     var has_more = true
     
-    updateIcon("logo/notion.png","logo/notion_dark.png")
+    updateIcon(tab, "logo/notion.png","logo/notion_dark.png")
     badge_text = " "
     set_badge()
 
@@ -363,7 +375,7 @@ async function fetch_couse_data(tab) {
     store_gradescope_list()
     store_pearson_list()
     store_webassign_list()
-    updateIcon()
+    updateIcon(tab)
     set_badge()
 
     // Push Assignments
@@ -550,7 +562,7 @@ async function fetch_couse_data(tab) {
         const zybook_item = zybook_list[index]
 
         // User Interface
-        updateIcon("logo/zybooks.png")
+        updateIcon(tab, "logo/zybooks.png")
         zybook_list[index][3] = "blue"
         store_zybook_list()
 
@@ -618,7 +630,7 @@ async function fetch_couse_data(tab) {
         const gradescope_item = gradescope_list[index]
 
         // User Interface
-        updateIcon("logo/gradescope.png")
+        updateIcon(tab, "logo/gradescope.png")
         gradescope_list[index][3] = "blue"
         store_gradescope_list()
 
@@ -668,7 +680,7 @@ async function fetch_couse_data(tab) {
         const pearson_item = pearson_list[index]
 
         // User Interface
-        updateIcon("logo/pearson.png")
+        updateIcon(tab, "logo/pearson.png")
         pearson_list[index][3] = "blue"
         store_pearson_list()
 
@@ -716,7 +728,7 @@ async function fetch_couse_data(tab) {
         const webassign_item = webassign_list[index]
 
         // User Interface
-        updateIcon("logo/webassign.png")
+        updateIcon(tab, "logo/webassign.png")
         webassign_list[index][3] = "blue"
         store_webassign_list()
 
@@ -763,7 +775,7 @@ async function fetch_couse_data(tab) {
     notion_status[1][1] = "Syncing course data - 0.0%"
     notion_status[1][3] = "blue"
     store_notion_status()
-    updateIcon("logo/notion.png","logo/notion_dark.png")
+    updateIcon(tab, "logo/notion.png","logo/notion_dark.png")
     for (const new_task of task_list) {
         let existing_task = task_exist(tab, new_task, notion_result)
         if (existing_task) {
@@ -784,7 +796,7 @@ async function fetch_couse_data(tab) {
             })
             .then(response => {return response.json()})
             .then(data => {
-                sync_to_notion_UI(task_list.length)
+                sync_to_notion_UI(tab, task_list.length)
             })
         } else {
             let properties = {
@@ -811,7 +823,7 @@ async function fetch_couse_data(tab) {
             })
             .then(response => {return response.json()})
             .then(data => {
-                sync_to_notion_UI(task_list.length)
+                sync_to_notion_UI(tab, task_list.length)
             })
         }
     }
